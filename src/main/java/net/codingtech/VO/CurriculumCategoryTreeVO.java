@@ -17,6 +17,7 @@ public class CurriculumCategoryTreeVO implements Serializable {
     private String text;
     private String  state;
 
+
     public CurriculumCategoryTreeVO() {
     }
 
