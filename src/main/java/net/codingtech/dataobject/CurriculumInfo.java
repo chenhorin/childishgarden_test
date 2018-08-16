@@ -22,7 +22,7 @@ public class CurriculumInfo {
     @Id
     private String curriculumId;
     private String curriculumName;
-    private Byte curriculumProperty;
+    private Integer curriculumProperty;
     private String userId;
     private String userName;
     private Integer curriculumDifficulty;
@@ -43,8 +43,9 @@ public class CurriculumInfo {
     public CurriculumInfo() {
     }
 
+
     public CurriculumInfo(String curriculumId, String curriculumName,
-                          Byte curriculumProperty, String userId,
+                          Integer curriculumProperty, String userId,
                           String userName, Integer curriculumDifficulty,
                           Integer curriculumStatus, Integer categoryId,
                           String curriculumPlan, String curriculumDescription,

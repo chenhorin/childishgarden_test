@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @program: childishgarden_test
- * @description: 分类管理api
+ * @description: 课程分类管理api
  * @author: hongren
  * @create: 2018-08-14 16:41
  **/
@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/curriculum")
 @Slf4j
-public class CurrilumCategoryController {
+public class CurriculumCategoryController {
 
     @Autowired
     private CurriculumCategoryService curriculumCategoryService;
