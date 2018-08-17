@@ -15,7 +15,19 @@ import java.util.List;
  **/
 public interface CourseSelectionDao extends JpaRepository<CourseSelection,String> {
 
-    @Query(value = "SELECT * FROM course_selection WHERE WEEKOFYEAR(course_day) " +
-            "= WEEKOFYEAR(FROM_UNIXTIME(:time ,'%y-%m-%d')); ",nativeQuery = true)
-    List<CourseSelection> findOneWeekByNow(@Param("time") long timestamp);
+
+    //班级查询
+    @Query(value = "SELECT * FROM course_selection c WHERE WEEKOFYEAR(course_day)" +
+            "=WEEKOFYEAR(FROM_UNIXTIME(?1,'%y-%m-%d')) and class_id=?2",nativeQuery = true)
+    List<CourseSelection> findOneWeekByClassId(long time,String classId);
+
+    //老师查询
+    @Query(value = "SELECT * FROM course_selection c WHERE WEEKOFYEAR(course_day)" +
+            "=WEEKOFYEAR(FROM_UNIXTIME(?1,'%y-%m-%d')) and user_id=?2",nativeQuery = true)
+    List<CourseSelection> findOneWeekByUserId(long time,String userId);
+    //个人查询
+    @Query(value = "SELECT * FROM course_selection c WHERE WEEKOFYEAR(course_day)" +
+            "=WEEKOFYEAR(FROM_UNIXTIME(?1,'%y-%m-%d')) and class_id=?2",nativeQuery = true)
+    List<CourseSelection> findOneWeekByChildId(long time,String childId);
+
 }

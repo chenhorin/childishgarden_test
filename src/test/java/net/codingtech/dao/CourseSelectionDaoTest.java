@@ -18,8 +18,20 @@ public class CourseSelectionDaoTest {
     CourseSelectionDao courseSelectionDao;
 
     @Test
-    public void findOneWeekByNow() {
-        List<CourseSelection> result = courseSelectionDao.findOneWeekByNow(1535619647);
-        Assert.assertNotEquals(0, result.size());
+    public void findOneWeekByClassId() {
+        List<CourseSelection> result = courseSelectionDao.findOneWeekByClassId(1534867200,"01");
+        Assert.assertNotEquals(0, result.size() );
+    }
+
+    @Test
+    public void findOneWeekByUserId() {
+        List<CourseSelection> result = courseSelectionDao.findOneWeekByChildId(1534867200,"01");
+        Assert.assertNotEquals(0, result.size() );
+    }
+
+    @Test
+    public void findOneWeekByChildId() {
+        List<CourseSelection> result = courseSelectionDao.findOneWeekByUserId(1534867200,"01");
+        Assert.assertNotEquals(0, result.size() );
     }
 }
