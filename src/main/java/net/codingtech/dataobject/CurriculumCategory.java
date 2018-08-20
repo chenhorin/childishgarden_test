@@ -30,6 +30,8 @@ public class CurriculumCategory {
     private Integer categoryStatus;
     private Date createTime;
     private Date updateTime;
+    private String categoryElements;
+
 
     public CurriculumCategory() {
     }

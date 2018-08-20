@@ -19,5 +19,5 @@ public interface CurriculumCategoryService {
 
     List<CurriculumCategory> findByCategoryIdIn(List<Integer> categoryIdList);
 
-    List<CurriculumCategoryTreeVO> getCurrilumCategoryList(Integer parentId);
+    List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId);
 }

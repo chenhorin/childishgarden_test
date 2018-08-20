@@ -1,6 +1,8 @@
 package net.codingtech.service;
 
 import net.codingtech.dataobject.CurriculumInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -27,5 +29,5 @@ public interface CurriculumService {
     //管理页面的显示,返回字段课程名 适合年龄,领域,区块...单选框的录入
     //需要考虑的是分类的添加是否需要做多选?
 
-    List<CurriculumInfo> findByDynamicCases(CurriculumInfo curriculumInfo);
+    Page<CurriculumInfo> findByDynamicCases(CurriculumInfo curriculumInfo,Pageable pageable);
 }

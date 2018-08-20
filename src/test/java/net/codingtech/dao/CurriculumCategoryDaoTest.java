@@ -24,7 +24,7 @@ public class CurriculumCategoryDaoTest {
     }
 
     @Test
-    public void savaTest() {
+    public void saveTest() {
         CurriculumCategory curriculumCategory = curriculumCategoryDao.findOne(1);
         curriculumCategory.setCategoryName("个人和社会发展");
         CurriculumCategory result = curriculumCategoryDao.save(curriculumCategory);

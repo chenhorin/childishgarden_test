@@ -5,6 +5,8 @@ import net.codingtech.dataobject.CurriculumInfo;
 import net.codingtech.service.CurriculumService;
 import net.codingtech.specification.TestCurriculumInfoDaoSpec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +32,9 @@ public class CurriculumServiceImpl implements CurriculumService {
     }
 
     @Override
-    public List<CurriculumInfo> findByDynamicCases(CurriculumInfo curriculumInfo) {
+    public Page<CurriculumInfo> findByDynamicCases(CurriculumInfo curriculumInfo, Pageable pageable) {
 
-        List<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findAll(TestCurriculumInfoDaoSpec.getSpec(curriculumInfo));//通过三个条件
+        Page<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findAll(TestCurriculumInfoDaoSpec.getSpec(curriculumInfo),pageable);//通过三个条件
         return curriculumInfoList;
 
     }

@@ -16,7 +16,7 @@ public class CourseSelectionController {
     CourseSelectionService courseSelectionService;
 
     @GetMapping("/findByClassId")
-    public CourseSelectionDTO findByClassId(@RequestParam("weekTime") long courseTime,@RequestParam("classId") String classId) {
+    public CourseSelectionDTO findByClassId( @RequestParam("weekTime") long courseTime, @RequestParam("classId") String classId) {
 
         return  courseSelectionService.findCourseByClassId(courseTime,classId);
 //        return  courseSelectionService.findCourseByClassId(Long.parseLong(courseTime),classId);

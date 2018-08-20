@@ -30,8 +30,8 @@ public class CurriculumCategoryServiceImplTest {
     }
 
     @Test
-    public void getCurrilumCategoryLiat() {
-        List<CurriculumCategoryTreeVO> currilumCategoryList = categoryService.getCurrilumCategoryList(1);
-        Assert.assertNotEquals(0, currilumCategoryList.size());
+    public void findCurriculumCategoryList() {
+        List<CurriculumCategoryTreeVO> curriculumCategoryList = categoryService.findCurriculumCategoryList(1);
+        Assert.assertNotEquals(0, curriculumCategoryList.size());
     }
 }
