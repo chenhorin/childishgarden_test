@@ -21,22 +21,41 @@ public class CurriculumInfo {
 
     @Id
     private String curriculumId;
+
     private String curriculumName;
+
     private Integer curriculumProperty;
+
     private String userId;
+
     private String userName;
+
     private Integer curriculumDifficulty;
+
     private Integer curriculumStatus;
+
     private Integer categoryId;
+
     private String curriculumPlan;
+
     private String curriculumDescription;
+
     private String curriculumPrepare;
+
     private String activityStep;
+
     private String activityTarget;
+
     private String activityTarget2;
+
     private String curriculumTarget;
+
     private String curriculumAge;
+
+    private String curriculumElement;
+
     private Date createTime;
+
     private Date updateTime;
 
 
@@ -68,35 +87,5 @@ public class CurriculumInfo {
         this.curriculumAge = curriculumAge;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CurriculumInfo that = (CurriculumInfo) o;
-        return curriculumDifficulty == that.curriculumDifficulty &&
-                curriculumStatus == that.curriculumStatus &&
-                categoryId == that.categoryId &&
-                Objects.equals(curriculumId, that.curriculumId) &&
-                Objects.equals(curriculumName, that.curriculumName) &&
-                Objects.equals(curriculumProperty, that.curriculumProperty) &&
-                Objects.equals(userId, that.userId) &&
-                Objects.equals(userName, that.userName) &&
-                Objects.equals(curriculumPlan, that.curriculumPlan) &&
-                Objects.equals(curriculumDescription, that.curriculumDescription) &&
-                Objects.equals(curriculumPrepare, that.curriculumPrepare) &&
-                Objects.equals(activityStep, that.activityStep) &&
-                Objects.equals(activityTarget, that.activityTarget) &&
-                Objects.equals(activityTarget2, that.activityTarget2) &&
-                Objects.equals(curriculumTarget, that.curriculumTarget) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(curriculumId, curriculumName, curriculumProperty, userId, userName, curriculumDifficulty, curriculumStatus, categoryId, curriculumPlan, curriculumDescription, curriculumPrepare, activityStep, activityTarget, activityTarget2, curriculumTarget, createTime, updateTime);
     }
 }

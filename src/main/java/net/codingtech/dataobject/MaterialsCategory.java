@@ -23,27 +23,15 @@ public class MaterialsCategory {
     @Id
     @GeneratedValue
     private Integer categoryId;
+
     private String categoryName;
+
     private Integer categoryStatus;
+
     private Date createTime;
+
     private Date updateTime;
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MaterialsCategory that = (MaterialsCategory) o;
-        return categoryId == that.categoryId &&
-                categoryStatus == that.categoryStatus &&
-                Objects.equals(categoryName, that.categoryName) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime);
-    }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(categoryId, categoryName, categoryStatus, createTime, updateTime);
-    }
 }

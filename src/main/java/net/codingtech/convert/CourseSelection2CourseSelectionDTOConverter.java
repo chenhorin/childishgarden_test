@@ -9,13 +9,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class CourseSelection2CourseSelectionDTO {
+public class CourseSelection2CourseSelectionDTOConverter {
 
-    public CourseSelection2CourseSelectionDTO() {
+    public CourseSelection2CourseSelectionDTOConverter() {
     }
 
 
-    public static CourseSelectionDTO course2CourseDTO(List<CourseSelection> courseSelectionList) {
+
+    //将课程转化成dto对象
+    public static CourseSelectionDTO convert(List<CourseSelection> courseSelectionList) {
+
 
         CourseSelectionDTO courseSelectionDTO = new CourseSelectionDTO();
 
@@ -27,6 +30,7 @@ public class CourseSelection2CourseSelectionDTO {
         List<CourseSelection> saturday = new ArrayList<>();
         List<CourseSelection> sunday = new ArrayList<>();
 
+        //遍历选课的集合
         for (CourseSelection courseSelection : courseSelectionList) {
             Integer dateToWeekNum = dateToWeekNum(courseSelection.getCourseDay());
             switch (dateToWeekNum) {

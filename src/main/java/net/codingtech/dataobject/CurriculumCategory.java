@@ -23,13 +23,21 @@ public class CurriculumCategory {
     @Id
     @GeneratedValue
     private Integer categoryId;
+
     private Boolean isParent;
+
     private Integer sortOrder;
+
     private Integer parentId;
+
     private String categoryName;
+
     private Integer categoryStatus;
+
     private Date createTime;
+
     private Date updateTime;
+
     private String categoryElements;
 
 
@@ -47,24 +55,4 @@ public class CurriculumCategory {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CurriculumCategory that = (CurriculumCategory) o;
-        return categoryId == that.categoryId &&
-                Objects.equals(isParent, that.isParent) &&
-                Objects.equals(sortOrder, that.sortOrder) &&
-                Objects.equals(parentId, that.parentId) &&
-                Objects.equals(categoryName, that.categoryName) &&
-                Objects.equals(categoryStatus, that.categoryStatus) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(categoryId, isParent, sortOrder, parentId, categoryName, categoryStatus, createTime, updateTime);
-    }
 }

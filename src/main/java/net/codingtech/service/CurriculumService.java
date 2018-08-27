@@ -1,6 +1,7 @@
 package net.codingtech.service;
 
 import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.dto.CurriculumDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,24 +11,60 @@ import java.util.List;
  * @program: childishgarden_test
  * @description: 课程服务
  * @author: hongren
- * @create: 2018-08-14 17:07
  **/
 public interface CurriculumService {
 
-    //通过分类id查询课程
-    List<CurriculumInfo> findByCategoryId(Integer id);
+    /**
+     * 查询单个课程,需要单个验证,服务都需要
+     * @param curriculumId
+     * @return
+     */
+    CurriculumDTO findOne(String curriculumId);
 
-    //通过分类id查询在线的课程
-    //添加课程
-    //设置课程在线
-    //设置课程下线
-    //查询所有课程
-    //查询所有在线课程
-    //查询
-    //根据年龄区间查询课程
-    //根据课程属性查询课程,动态查询
-    //管理页面的显示,返回字段课程名 适合年龄,领域,区块...单选框的录入
-    //需要考虑的是分类的添加是否需要做多选?
+    /**
+     * 查询上线的课程,需要分页
+     * @return
+     */
+    Page<CurriculumDTO> findUpAll(Pageable pageable);
 
-    Page<CurriculumInfo> findByDynamicCases(CurriculumInfo curriculumInfo,Pageable pageable);
+    /**
+     * 查询所有课程已分页,后台
+     * @param pageable
+     * @return
+     */
+    Page<CurriculumDTO> findList(Pageable pageable);
+
+    /**
+     * 根据课程分类ID,属性(室内外),适合课程动态分页查询,已倒序
+     * @param curriculumDTO
+     * @param pageable
+     * @return
+     */
+    Page<CurriculumDTO> findByDynamicCases(CurriculumDTO curriculumDTO, Pageable pageable);
+
+    /**
+     * 课程的修改和创建
+     * @param curriculumDTO
+     * @return
+     */
+    CurriculumDTO save(CurriculumDTO curriculumDTO);
+
+    /**
+     * 课程上线
+     * @param curriculumId
+     * @return
+     */
+    CurriculumDTO onUsing(String curriculumId);
+
+    /**
+     * 课程下线
+     * @param curriculumId
+     * @return
+     */
+    CurriculumDTO offUsing(String curriculumId);
+
+
+
+
+
 }

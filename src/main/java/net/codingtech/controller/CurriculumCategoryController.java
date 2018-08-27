@@ -27,6 +27,7 @@ public class CurriculumCategoryController {
     private CurriculumCategoryService curriculumCategoryService;
 
 
+
     @GetMapping("/category")
     public List<CurriculumCategoryTreeVO> getCurriculumCategoryList(@RequestParam(name = "id", defaultValue = "0") Integer parentId) {
         return curriculumCategoryService.findCurriculumCategoryList(parentId);

@@ -1,6 +1,6 @@
 package net.codingtech.service.impl;
 
-import net.codingtech.convert.CourseSelection2CourseSelectionDTO;
+import net.codingtech.convert.CourseSelection2CourseSelectionDTOConverter;
 import net.codingtech.dao.CourseSelectionDao;
 import net.codingtech.dataobject.CourseSelection;
 import net.codingtech.dto.CourseSelectionDTO;
@@ -18,9 +18,10 @@ public class CourseSelectionServiceImpl implements CourseSelectionService {
     private CourseSelectionDao courseSelectionDao;
 
     @Override
+    //按班级查询课程
     public CourseSelectionDTO findCourseByClassId(long courseTime,String classId) {
         List<CourseSelection> oneWeekByClassId = courseSelectionDao.findOneWeekByClassId(courseTime,classId);
-        CourseSelectionDTO courseSelectionDTO = CourseSelection2CourseSelectionDTO.course2CourseDTO(oneWeekByClassId);
+        CourseSelectionDTO courseSelectionDTO = CourseSelection2CourseSelectionDTOConverter.convert(oneWeekByClassId);
         return courseSelectionDTO;
     }
 
@@ -32,5 +33,20 @@ public class CourseSelectionServiceImpl implements CourseSelectionService {
     @Override
     public CourseSelectionDTO findCourseByUserId(long courseTime,String useId) {
         return null;
+    }
+
+    @Override
+    public CourseSelection findOne(String courseId) {
+        return null;
+    }
+
+    @Override
+    public CourseSelection save(CourseSelection courseSelection) {
+        return null;
+    }
+
+    @Override
+    public void delete(CourseSelection courseSelection) {
+
     }
 }

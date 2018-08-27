@@ -10,9 +10,9 @@ import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CourseSelection2CourseSelectionDTOTest {
+public class CourseSelection2CourseSelectionDTOConverterTest {
 
-    private CourseSelection2CourseSelectionDTO courseSelectionDTO = new CourseSelection2CourseSelectionDTO();
+    private CourseSelection2CourseSelectionDTOConverter courseSelectionDTO = new CourseSelection2CourseSelectionDTOConverter();
 
     @Test
 
@@ -21,8 +21,8 @@ public class CourseSelection2CourseSelectionDTOTest {
 
     @Test
     public void dateToWeek() {
-        String toWeek = CourseSelection2CourseSelectionDTO.dateToWeek(new Date());
+        String toWeek = CourseSelection2CourseSelectionDTOConverter.dateToWeek(new Date());
         Assert.assertNotEquals(null,toWeek);
-        System.out.println(CourseSelection2CourseSelectionDTO.dateToWeek(new Date()));
+        System.out.println(CourseSelection2CourseSelectionDTOConverter.dateToWeek(new Date()));
     }
 }

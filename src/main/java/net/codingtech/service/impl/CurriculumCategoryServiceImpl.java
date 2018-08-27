@@ -1,6 +1,5 @@
 package net.codingtech.service.impl;
 
-import net.codingtech.VO.CurriculumCategoryTreeVO;
 import net.codingtech.dao.CurriculumCategoryDao;
 import net.codingtech.dataobject.CurriculumCategory;
 import net.codingtech.service.CurriculumCategoryService;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @program: childishgarden_test
@@ -34,18 +32,28 @@ public class CurriculumCategoryServiceImpl implements CurriculumCategoryService 
     }
 
     @Override
-    public List<CurriculumCategory> findByCategoryIdIn(List<Integer> categoryIdList) {
+    public List<CurriculumCategory> findAllSonCategory() {
         return null;
     }
 
     @Override
-    //封装成eazyui的格式
-    public List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId) {
+    public List<CurriculumCategory> findByParentId(Integer parentId) {
+        return null;
+    }
+
+    @Override
+    public CurriculumCategory save(CurriculumCategory curriculumCategory) {
+        return null;
+    }
+
+    //封装成Eazyui的格式,返回给前端的视图对象
+   /* public List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId) {
         List<CurriculumCategory> curriculumCategoryList = curriculumCategoryDao.findByParentId(parentId);
 
-        List<CurriculumCategoryTreeVO> curriculumCategoryTreeVOList = curriculumCategoryList.stream().map(e -> new CurriculumCategoryTreeVO(e.getParentId(), e.getCategoryName(), e.getIsParent() ? "closed" : "open"))
+        List<CurriculumCategoryTreeVO> curriculumCategoryTreeVOList = curriculumCategoryList.stream().map(e ->
+                new CurriculumCategoryTreeVO(e.getParentId(), e.getCategoryName(), e.getIsParent() ? "closed" : "open"))
                 .collect(Collectors.toList());
 
         return curriculumCategoryTreeVOList;
-    }
+    }*/
 }
