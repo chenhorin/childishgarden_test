@@ -1,6 +1,7 @@
 package net.codingtech.dao;
 
 import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.enums.CurriculumStatusEnum;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,5 +24,11 @@ public class CurriculumInfoDaoTest {
     public void findByCategoryId() {
         List<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findByCategoryId(3);
         Assert.assertNotEquals(0, curriculumInfoList.size());
+    }
+
+    @Test
+    public void findByCurriculumStatus() {
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findByCurriculumStatus(CurriculumStatusEnum.UP.getCode());
+        assertNotEquals(0,curriculumInfoList.size());
     }
 }

@@ -9,23 +9,67 @@ import net.codingtech.dto.CourseSelectionDTO;
  */
 public interface CourseSelectionService {
 
-    //按班级返回课表  当班级为空时，为私课
-   CourseSelectionDTO findCourseByClassId(long courseTime,String classId);
 
-    //按个人返回课表   班级课表加私课
-    CourseSelectionDTO findCourseByChildId(long courseTime,String childId);
+    /**
+     * 按班级返回课表  当班级为空时，为私课 //需要考虑班级加其他人的情况吗?需要考虑的是不能是本班的学生
+     *这样查询个人的时候才不会重复
+     *
+     * @param courseTime
+     * @param classId
+     * @return
+     */
+    CourseSelectionDTO findCourseByClassId(long courseTime, String classId);
 
-    //按老师返回课表
-    CourseSelectionDTO findCourseByUserId(long courseTime,String useId);
+    /**
+     * 按孩子返回课表  班级课表加私课
+     *
+     * @param courseTime
+     * @param childId
+     * @return
+     */
+    CourseSelectionDTO findCourseByChildId(long courseTime, String childId);
 
-    //查找单个选课信息
+    /**
+     * 按老师返回课表
+     *
+     * @param courseTime
+     * @param useId
+     * @return
+     */
+    CourseSelectionDTO findCourseByUserId(long courseTime, String useId);
+
+    /**
+     * 查找单节课
+     *
+     * @param courseId
+     * @return
+     */
     CourseSelection findOne(String courseId);
 
-    //增加修改
+    /**
+     * 新增修改选课
+     *
+     * @param courseSelection
+     * @return
+     */
+    // TODO 创建和修改是否需要分开?
     CourseSelection save(CourseSelection courseSelection);
 
-    //删除,可以直接删除吗?逻辑删除.
-    void delete(CourseSelection courseSelection);
+    /**
+     * 逻辑下线选课
+     *
+     * @param detailId
+     * @return
+     */
+    CourseSelection offUsing(String detailId);
+
+    /**
+     * 上线选课
+     *
+     * @param detailId
+     * @return
+     */
+    CourseSelection onUsing(String detailId);
 
 
 }

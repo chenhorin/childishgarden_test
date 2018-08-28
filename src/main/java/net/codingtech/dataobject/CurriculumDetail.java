@@ -41,4 +41,20 @@ public class CurriculumDetail {
     private Date updateTime;
 
 
+    public CurriculumDetail() {
+    }
+
+    public CurriculumDetail(String detailId, String curriculumId, String musicId, String musicName, String materialId,
+                            String materialName, String bookId, String bookName, Date createTime, Date updateTime) {
+        this.detailId = detailId;
+        this.curriculumId = curriculumId;
+        this.musicId = musicId;
+        this.musicName = musicName;
+        this.materialId = materialId;
+        this.materialName = materialName;
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 }

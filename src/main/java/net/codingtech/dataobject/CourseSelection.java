@@ -24,6 +24,8 @@ public class CourseSelection {
 
     private String curriculumId;
 
+    private String curriculumName;
+
     private String userId;
 
     private String userName;
@@ -47,4 +49,27 @@ public class CourseSelection {
     private Date updateTime;
 
 
+    public CourseSelection(String detailId, String curriculumId, String curriculumName,
+                           String userId, String userName, String classId, String className,
+                           String childId, String classroom,
+                           Date courseDay, Integer courseNum, Integer courseStatus,
+                           Date createTime, Date updateTime) {
+        this.detailId = detailId;
+        this.curriculumId = curriculumId;
+        this.curriculumName = curriculumName;
+        this.userId = userId;
+        this.userName = userName;
+        this.classId = classId;
+        this.className = className;
+        this.childId = childId;
+        this.classroom = classroom;
+        this.courseDay = courseDay;
+        this.courseNum = courseNum;
+        this.courseStatus = courseStatus;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
+    public CourseSelection() {
+    }
 }

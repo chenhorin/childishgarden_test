@@ -44,8 +44,9 @@ public class CurriculumCategory {
     public CurriculumCategory() {
     }
 
-    public CurriculumCategory(Boolean isParent, Integer sortOrder, Integer parentId,
-                              String categoryName, Integer categoryStatus, Date createTime, Date updateTime) {
+    public CurriculumCategory(Boolean isParent, Integer sortOrder, Integer parentId, String categoryName,
+                              Integer categoryStatus, Date createTime,
+                              Date updateTime, String categoryElements) {
         this.isParent = isParent;
         this.sortOrder = sortOrder;
         this.parentId = parentId;
@@ -53,6 +54,6 @@ public class CurriculumCategory {
         this.categoryStatus = categoryStatus;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.categoryElements = categoryElements;
     }
-
 }

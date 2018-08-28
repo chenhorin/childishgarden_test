@@ -14,8 +14,20 @@ import java.util.List;
  **/
 public interface CurriculumInfoDao extends JpaRepository<CurriculumInfo, String>, JpaSpecificationExecutor<CurriculumInfo> {
 
+    /**
+     * 按类目id查询课程
+     * @param categoryId
+     * @return
+     */
     List<CurriculumInfo> findByCategoryId(Integer categoryId);
 
+
+    /**
+     * 查询所有在线的课程
+     * @param curriculumStatus
+     * @return
+     */
+    List<CurriculumInfo> findByCurriculumStatus(Integer curriculumStatus);
 
 
 }

@@ -54,17 +54,13 @@ public interface CurriculumService {
      * @param curriculumId
      * @return
      */
-    CurriculumDTO onUsing(String curriculumId);
+    CurriculumInfo onUsing(String curriculumId);
 
     /**
      * 课程下线
      * @param curriculumId
      * @return
      */
-    CurriculumDTO offUsing(String curriculumId);
-
-
-
-
+    CurriculumInfo offUsing(String curriculumId);
 
 }

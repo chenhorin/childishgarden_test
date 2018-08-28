@@ -1,6 +1,9 @@
 package net.codingtech.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import net.codingtech.enums.CurriculumStatusEnum;
+import net.codingtech.utils.EnumUtil;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -32,7 +35,10 @@ public class CurriculumInfo {
 
     private Integer curriculumDifficulty;
 
-    private Integer curriculumStatus;
+    /**
+     * 课程在线码
+     */
+    private Integer curriculumStatus = CurriculumStatusEnum.UP.getCode();
 
     private Integer categoryId;
 
@@ -63,12 +69,12 @@ public class CurriculumInfo {
     }
 
 
-    public CurriculumInfo(String curriculumId, String curriculumName,
-                          Integer curriculumProperty, String userId,
-                          String userName, Integer curriculumDifficulty,
-                          Integer curriculumStatus, Integer categoryId,
-                          String curriculumPlan, String curriculumDescription,
-                          String curriculumPrepare, String activityStep, String activityTarget, String activityTarget2, String curriculumTarget, String curriculumAge, Date createTime, Date updateTime) {
+    public CurriculumInfo(String curriculumId, String curriculumName, Integer curriculumProperty,
+                          String userId, String userName, Integer curriculumDifficulty,
+                          Integer curriculumStatus, Integer categoryId, String curriculumPlan,
+                          String curriculumDescription, String curriculumPrepare, String activityStep,
+                          String activityTarget, String activityTarget2, String curriculumTarget,
+                          String curriculumAge, String curriculumElement, Date createTime, Date updateTime) {
         this.curriculumId = curriculumId;
         this.curriculumName = curriculumName;
         this.curriculumProperty = curriculumProperty;
@@ -85,7 +91,13 @@ public class CurriculumInfo {
         this.activityTarget2 = activityTarget2;
         this.curriculumTarget = curriculumTarget;
         this.curriculumAge = curriculumAge;
+        this.curriculumElement = curriculumElement;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    @JsonIgnore
+    public CurriculumStatusEnum getCurriculumStatusEnum() {
+        return EnumUtil.getByCode(curriculumStatus, CurriculumStatusEnum.class);
     }
 }

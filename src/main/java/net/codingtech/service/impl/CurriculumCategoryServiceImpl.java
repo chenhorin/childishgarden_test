@@ -2,9 +2,13 @@ package net.codingtech.service.impl;
 
 import net.codingtech.dao.CurriculumCategoryDao;
 import net.codingtech.dataobject.CurriculumCategory;
+import net.codingtech.enums.CurriculumCategoryEnum;
+import net.codingtech.enums.ResultEnum;
+import net.codingtech.exception.CurriculumException;
 import net.codingtech.service.CurriculumCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -22,28 +26,69 @@ public class CurriculumCategoryServiceImpl implements CurriculumCategoryService 
 
     @Override
     public CurriculumCategory findOne(Integer categoryId) {
-        curriculumCategoryDao.findOne(categoryId);
-        return null;
+        return curriculumCategoryDao.findOne(categoryId);
     }
 
     @Override
     public List<CurriculumCategory> findAll() {
-        return null;
+        return curriculumCategoryDao.findAll();
     }
 
     @Override
     public List<CurriculumCategory> findAllSonCategory() {
-        return null;
+        List<CurriculumCategory> curriculumCategoryList = curriculumCategoryDao.
+                findByIsParent(CurriculumCategoryEnum.SON_DOT.getCode());
+        if (CollectionUtils.isEmpty(curriculumCategoryList)) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_NOT_EXIST);
+        }
+        return curriculumCategoryList;
     }
 
     @Override
     public List<CurriculumCategory> findByParentId(Integer parentId) {
-        return null;
+        List<CurriculumCategory> categoryList = curriculumCategoryDao.findByParentId(parentId);
+        if (CollectionUtils.isEmpty(categoryList)) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_NOT_EXIST);
+        }
+        return categoryList;
     }
 
     @Override
     public CurriculumCategory save(CurriculumCategory curriculumCategory) {
-        return null;
+//      TODO 表单的校验,格式是否正确
+        return curriculumCategoryDao.save(curriculumCategory);
+    }
+
+    @Override
+    public CurriculumCategory onUsing(Integer categoryId) {
+        CurriculumCategory curriculumCategory = curriculumCategoryDao.findOne(categoryId);
+        //非空判断
+        if (curriculumCategory == null) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_NOT_EXIST);
+        }
+        //状态判断
+        if (curriculumCategory.getCategoryStatus() == CurriculumCategoryEnum.UP.getCode()) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_STATUS_ERROR);
+        }
+        //更新
+        curriculumCategory.setCategoryStatus(CurriculumCategoryEnum.UP.getCode());
+        return curriculumCategoryDao.save(curriculumCategory);
+    }
+
+    @Override
+    public CurriculumCategory offUsing(Integer categoryId) {
+        CurriculumCategory curriculumCategory = curriculumCategoryDao.findOne(categoryId);
+        //非空判断
+        if (curriculumCategory == null) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_NOT_EXIST);
+        }
+        //状态判断
+        if (curriculumCategory.getCategoryStatus() == CurriculumCategoryEnum.DOWN.getCode()) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_STATUS_ERROR);
+        }
+        //更新
+        curriculumCategory.setCategoryStatus(CurriculumCategoryEnum.DOWN.getCode());
+        return curriculumCategoryDao.save(curriculumCategory);
     }
 
     //封装成Eazyui的格式,返回给前端的视图对象

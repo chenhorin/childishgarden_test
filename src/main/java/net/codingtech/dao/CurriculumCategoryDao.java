@@ -15,4 +15,6 @@ public interface CurriculumCategoryDao extends JpaRepository<CurriculumCategory,
 
     List<CurriculumCategory> findByParentId(Integer id);
 
+    List<CurriculumCategory> findByIsParent(Integer id);
+
 }

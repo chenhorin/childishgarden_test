@@ -2,11 +2,9 @@ package net.codingtech.convert;
 
 import net.codingtech.dataobject.CourseSelection;
 import net.codingtech.dto.CourseSelectionDTO;
+import net.codingtech.utils.TimeUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class CourseSelection2CourseSelectionDTOConverter {
@@ -14,9 +12,11 @@ public class CourseSelection2CourseSelectionDTOConverter {
     public CourseSelection2CourseSelectionDTOConverter() {
     }
 
-
-
-    //将课程转化成dto对象
+    /**
+     * 将课程转化成dto对象
+     * @param courseSelectionList
+     * @return
+     */
     public static CourseSelectionDTO convert(List<CourseSelection> courseSelectionList) {
 
 
@@ -32,7 +32,7 @@ public class CourseSelection2CourseSelectionDTOConverter {
 
         //遍历选课的集合
         for (CourseSelection courseSelection : courseSelectionList) {
-            Integer dateToWeekNum = dateToWeekNum(courseSelection.getCourseDay());
+            Integer dateToWeekNum = TimeUtil.dateToWeekNum(courseSelection.getCourseDay());
             switch (dateToWeekNum) {
                 case 1:
                     sunday.add(courseSelection);
@@ -68,17 +68,5 @@ public class CourseSelection2CourseSelectionDTOConverter {
         return courseSelectionDTO;
     }
 
-    //将时间转化成周
-    public static String dateToWeek(Date date) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        return new SimpleDateFormat("EEEE").format(c.getTime());
-    }
 
-    //将时间转化成周对应的Num
-    public static Integer dateToWeekNum(Date date) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        return c.get(Calendar.DAY_OF_WEEK);
-    }
 }
