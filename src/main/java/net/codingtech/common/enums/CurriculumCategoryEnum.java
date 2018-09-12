@@ -1,4 +1,4 @@
-package net.codingtech.enums;
+package net.codingtech.common.enums;
 
 import lombok.Getter;
 

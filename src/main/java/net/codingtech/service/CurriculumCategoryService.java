@@ -12,6 +12,19 @@ import java.util.List;
 public interface CurriculumCategoryService {
 
     /**
+     * 添加商品
+     * @param curriculumCategory
+     * @return
+     */
+    CurriculumCategory addCategory(CurriculumCategory curriculumCategory);
+
+    /**
+     * 更新商品
+     * @param curriculumCategory
+     * @return
+     */
+    CurriculumCategory updateCategory(CurriculumCategory curriculumCategory);
+    /**
      * 查询单个类目情况
      *
      * @param categoryId
@@ -42,15 +55,14 @@ public interface CurriculumCategoryService {
     List<CurriculumCategory> findByParentId(Integer parentId);
 
     /**
-     * 新增和修改分类
-     *
-     * @param curriculumCategory
+     * 递归查询本节点的id及孩子节点的id
+     * @param categoryId
      * @return
      */
-    CurriculumCategory save(CurriculumCategory curriculumCategory);
+    List<Integer> getCategoryAndDeepChildrenCategory(Integer categoryId);
 
     /**
-     * 使用类目
+     * 上线类目
      *
      * @param categoryId
      * @return
@@ -64,6 +76,7 @@ public interface CurriculumCategoryService {
      * @return
      */
     CurriculumCategory offUsing(Integer categoryId);
+
 
 
 }

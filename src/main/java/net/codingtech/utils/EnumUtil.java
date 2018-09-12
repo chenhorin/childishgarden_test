@@ -1,6 +1,6 @@
 package net.codingtech.utils;
 
-import net.codingtech.enums.CodeEnum;
+import net.codingtech.common.enums.CodeEnum;
 
 public class EnumUtil {
     public static <T extends CodeEnum> T getByCode(Integer code, Class<T> enumClass) {

@@ -1,16 +1,20 @@
 package net.codingtech.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import net.codingtech.common.enums.CurriculumCategoryEnum;
+import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.dao.CurriculumCategoryDao;
 import net.codingtech.dataobject.CurriculumCategory;
-import net.codingtech.enums.CurriculumCategoryEnum;
-import net.codingtech.enums.ResultEnum;
 import net.codingtech.exception.CurriculumException;
 import net.codingtech.service.CurriculumCategoryService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @program: childishgarden_test
@@ -23,6 +27,28 @@ public class CurriculumCategoryServiceImpl implements CurriculumCategoryService 
 
     @Autowired
     CurriculumCategoryDao curriculumCategoryDao;
+
+
+    @Override
+    public CurriculumCategory addCategory(CurriculumCategory curriculumCategory) {
+        if (curriculumCategory.getParentId() == null || StringUtils.isBlank(curriculumCategory.getCategoryName())) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_ADD_ERROR);
+        }
+
+        CurriculumCategory category = curriculumCategoryDao.save(curriculumCategory);
+
+        return category;
+    }
+
+    @Override
+    public CurriculumCategory updateCategory(CurriculumCategory curriculumCategory) {
+        if (curriculumCategory.getCategoryId() == null || StringUtils.isBlank(curriculumCategory.getCategoryName())) {
+            throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_ADD_ERROR);
+        }
+
+        CurriculumCategory category = curriculumCategoryDao.save(curriculumCategory);
+        return category;
+    }
 
     @Override
     public CurriculumCategory findOne(Integer categoryId) {
@@ -53,11 +79,6 @@ public class CurriculumCategoryServiceImpl implements CurriculumCategoryService 
         return categoryList;
     }
 
-    @Override
-    public CurriculumCategory save(CurriculumCategory curriculumCategory) {
-//      TODO 表单的校验,格式是否正确
-        return curriculumCategoryDao.save(curriculumCategory);
-    }
 
     @Override
     public CurriculumCategory onUsing(Integer categoryId) {
@@ -101,4 +122,33 @@ public class CurriculumCategoryServiceImpl implements CurriculumCategoryService 
 
         return curriculumCategoryTreeVOList;
     }*/
+
+    @Override
+    public List<Integer> getCategoryAndDeepChildrenCategory(Integer categoryId) {
+
+        Set<CurriculumCategory> categorySet = Sets.newHashSet();
+        findChildCategory(categorySet, categoryId);
+
+
+        List<Integer> categoryIdList = Lists.newArrayList();
+        if (categoryId != null) {
+            for (CurriculumCategory categoryItem : categorySet) {
+                categoryIdList.add(categoryItem.getCategoryId());
+            }
+        }
+        return categoryIdList;
+    }
+
+    private Set<CurriculumCategory> findChildCategory(Set<CurriculumCategory> categorySet, Integer categoryId) {
+        CurriculumCategory category = curriculumCategoryDao.findOne(categoryId);
+        if (category != null) {
+            categorySet.add(category);
+        }
+        //查找子节点,递归算法一定要有一个退出的条件
+        List<CurriculumCategory> categoryList = curriculumCategoryDao.findByParentId(categoryId);
+        for (CurriculumCategory categoryItem : categoryList) {
+            findChildCategory(categorySet, categoryItem.getCategoryId());
+        }
+        return categorySet;
+    }
 }

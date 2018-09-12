@@ -7,8 +7,8 @@ import net.codingtech.dao.CurriculumInfoDao;
 import net.codingtech.dataobject.CurriculumDetail;
 import net.codingtech.dataobject.CurriculumInfo;
 import net.codingtech.dto.CurriculumDTO;
-import net.codingtech.enums.CurriculumStatusEnum;
-import net.codingtech.enums.ResultEnum;
+import net.codingtech.common.enums.CurriculumStatusEnum;
+import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.exception.CurriculumException;
 import net.codingtech.service.CurriculumService;
 import net.codingtech.specification.TestCurriculumInfoDaoSpec;
@@ -93,11 +93,13 @@ public class CurriculumServiceImpl implements CurriculumService {
     public CurriculumDTO save(CurriculumDTO curriculumDTO) {
 //      设置课程id
         String curriculumId = KeyUtil.genUniqueKey();
+        if (curriculumDTO.getCurriculumId() == null) {
+            curriculumDTO.setCurriculumId(curriculumId);
+        }
 
 //      写入课程库
         CurriculumInfo curriculumInfo = new CurriculumInfo();
         BeanUtils.copyProperties(curriculumDTO, curriculumInfo);
-        curriculumInfo.setCurriculumId(curriculumId);
 //       因为DTO的信息没有那么全,所以需要自行补上,例如id需要自己添加
         curriculumInfoDao.save(curriculumInfo);
 //      写入课程详情库
@@ -105,6 +107,8 @@ public class CurriculumServiceImpl implements CurriculumService {
         for (CurriculumDetail curriculumDetail : curriculumDTO.getCurriculumDetailList()) {
             curriculumDetail.setDetailId(KeyUtil.genUniqueKey());
             curriculumDetail.setCurriculumId(curriculumId);
+
+//            curriculumDetail.getBookId();是否需要做库存管理?
             curriculumDetailDao.save(curriculumDetail);
         }
 

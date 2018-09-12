@@ -1,9 +1,9 @@
-package net.codingtech.enums;
+package net.codingtech.common.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum CurriculumStatusEnum implements CodeEnum {
+public enum CourseSelectionStatusEnum {
     UP(0, "在线"),
     DOWN(1, "下线");
 
@@ -11,7 +11,7 @@ public enum CurriculumStatusEnum implements CodeEnum {
 
     private String message;
 
-    CurriculumStatusEnum(Integer code, String message) {
+    CourseSelectionStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -1,7 +1,7 @@
 package net.codingtech.dao;
 
 import net.codingtech.dataobject.CourseSelection;
-import net.codingtech.enums.CurriculumStatusEnum;
+import net.codingtech.common.enums.CurriculumStatusEnum;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

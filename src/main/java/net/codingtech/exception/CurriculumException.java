@@ -1,7 +1,7 @@
 package net.codingtech.exception;
 
 import lombok.Getter;
-import net.codingtech.enums.ResultEnum;
+import net.codingtech.common.enums.ResultEnum;
 
 @Getter
 public class CurriculumException extends RuntimeException {

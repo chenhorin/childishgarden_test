@@ -1,6 +1,7 @@
 package net.codingtech.dataobject;
 
 import lombok.Data;
+import net.codingtech.common.enums.CurriculumStatusEnum;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class CurriculumCategory {
 
     private String categoryName;
 
-    private Integer categoryStatus;
+    private Integer categoryStatus = CurriculumStatusEnum.UP.getCode();
 
     private Date createTime;
 

@@ -2,14 +2,13 @@ package net.codingtech.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import net.codingtech.enums.CurriculumStatusEnum;
+import net.codingtech.common.enums.CurriculumStatusEnum;
 import net.codingtech.utils.EnumUtil;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @program: childishgarden_test
