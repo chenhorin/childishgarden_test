@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import net.codingtech.common.enums.CurriculumStatusEnum;
 import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.dataobject.CurriculumDetail;
+import net.codingtech.pojo.CurriculumDetail;
 import net.codingtech.dto.CurriculumDTO;
 import net.codingtech.exception.CurriculumException;
 import net.codingtech.form.back.CurriculumManageForm;

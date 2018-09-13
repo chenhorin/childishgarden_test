@@ -1,6 +1,6 @@
 package net.codingtech.convert;
 
-import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.pojo.CurriculumInfo;
 import net.codingtech.dto.CurriculumDTO;
 import org.springframework.beans.BeanUtils;
 

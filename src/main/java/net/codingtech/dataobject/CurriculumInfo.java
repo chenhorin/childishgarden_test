@@ -63,6 +63,8 @@ public class CurriculumInfo {
 
     private Date updateTime;
 
+    private String categoryName;
+
 
     public CurriculumInfo() {
     }
@@ -73,7 +75,8 @@ public class CurriculumInfo {
                           Integer curriculumStatus, Integer categoryId, String curriculumPlan,
                           String curriculumDescription, String curriculumPrepare, String activityStep,
                           String activityTarget, String activityTarget2, String curriculumTarget,
-                          String curriculumAge, String curriculumElement, Date createTime, Date updateTime) {
+                          String curriculumAge, String curriculumElement, Date createTime, Date updateTime,
+                          String categoryName) {
         this.curriculumId = curriculumId;
         this.curriculumName = curriculumName;
         this.curriculumProperty = curriculumProperty;
@@ -93,6 +96,7 @@ public class CurriculumInfo {
         this.curriculumElement = curriculumElement;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.categoryName = categoryName;
     }
 
     @JsonIgnore

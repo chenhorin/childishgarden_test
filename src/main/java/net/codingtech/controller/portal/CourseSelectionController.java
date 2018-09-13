@@ -2,7 +2,7 @@ package net.codingtech.controller.portal;
 
 import io.swagger.annotations.ApiOperation;
 import net.codingtech.dto.CourseSelectionDTO;
-import net.codingtech.service.CourseSelectionService;
+import net.codingtech.service.ICourseSelectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseSelectionController {
 
     @Autowired
-    CourseSelectionService courseSelectionService;
+    ICourseSelectionService courseSelectionService;
 
     @ApiOperation(value="一个测试API",notes = "第一个测试api")
     @GetMapping("/findByClassId")

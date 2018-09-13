@@ -3,12 +3,11 @@ package net.codingtech.controller.back;
 import net.codingtech.VO.ResultVO;
 import net.codingtech.common.config.Const;
 import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.dataobject.CurriculumCategory;
-import net.codingtech.dataobject.UserInfo;
+import net.codingtech.pojo.CurriculumCategory;
+import net.codingtech.pojo.UserInfo;
 import net.codingtech.exception.CurriculumException;
 import net.codingtech.form.back.CurriculumManageForm;
-import net.codingtech.form.portal.CurriculumCategoryForm;
-import net.codingtech.service.CurriculumCategoryService;
+import net.codingtech.service.ICurriculumCategoryService;
 import net.codingtech.utils.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import javax.validation.Valid;
 public class CurriculumCategoryManageController {
 
     @Autowired
-    private CurriculumCategoryService curriculumCategoryService;
+    private ICurriculumCategoryService curriculumCategoryService;
 
 
     @RequestMapping("/add")

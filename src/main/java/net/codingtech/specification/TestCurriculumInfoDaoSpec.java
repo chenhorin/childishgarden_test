@@ -1,6 +1,6 @@
 package net.codingtech.specification;
 
-import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.pojo.CurriculumInfo;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

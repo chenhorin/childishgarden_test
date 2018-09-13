@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.BookInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.BookInfo" >
+    <constructor >
+      <idArg column="book_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="book_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="book_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="book_status" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    book_id, category_id, book_name, book_pic, book_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from book_info
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from book_info
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.BookInfo" >
+    insert into book_info (book_id, category_id, book_name, 
+      book_pic, book_status, create_time, 
+      update_time)
+    values (#{bookId,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, 
+      #{bookPic,jdbcType=VARCHAR}, #{bookStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.BookInfo" >
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="bookPic != null" >
+        book_pic,
+      </if>
+      <if test="bookStatus != null" >
+        book_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPic != null" >
+        #{bookPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bookStatus != null" >
+        #{bookStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.BookInfo" >
+    update book_info
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPic != null" >
+        book_pic = #{bookPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bookStatus != null" >
+        book_status = #{bookStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.BookInfo" >
+    update book_info
+    set category_id = #{categoryId,jdbcType=INTEGER},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      book_pic = #{bookPic,jdbcType=VARCHAR},
+      book_status = #{bookStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where book_id = #{bookId,jdbcType=VARCHAR}
+  </update>
+</mapper>

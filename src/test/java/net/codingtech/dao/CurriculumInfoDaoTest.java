@@ -1,6 +1,6 @@
 package net.codingtech.dao;
 
-import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.pojo.CurriculumInfo;
 import net.codingtech.common.enums.CurriculumStatusEnum;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class CurriculumInfoDaoTest {
 
     @Autowired
-    CurriculumInfoDao curriculumInfoDao;
+    CurriculumInfoRepository curriculumInfoDao;
 
     @Test
     public void findByCategoryId() {

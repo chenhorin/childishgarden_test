@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.ParentInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.ParentInfo" >
+    <constructor >
+      <idArg column="parent_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="class_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="class_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="camp_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_wechat" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parent_id, parent_name, class_id, class_name, camp_id, parent_phone, parent_wechat, 
+    parent_address, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parent_info
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parent_info
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.ParentInfo" >
+    insert into parent_info (parent_id, parent_name, class_id, 
+      class_name, camp_id, parent_phone, 
+      parent_wechat, parent_address, create_time, 
+      update_time)
+    values (#{parentId,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, 
+      #{className,jdbcType=VARCHAR}, #{campId,jdbcType=VARCHAR}, #{parentPhone,jdbcType=VARCHAR}, 
+      #{parentWechat,jdbcType=VARCHAR}, #{parentAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.ParentInfo" >
+    insert into parent_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="campId != null" >
+        camp_id,
+      </if>
+      <if test="parentPhone != null" >
+        parent_phone,
+      </if>
+      <if test="parentWechat != null" >
+        parent_wechat,
+      </if>
+      <if test="parentAddress != null" >
+        parent_address,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="campId != null" >
+        #{campId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPhone != null" >
+        #{parentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="parentWechat != null" >
+        #{parentWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="parentAddress != null" >
+        #{parentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.ParentInfo" >
+    update parent_info
+    <set >
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="campId != null" >
+        camp_id = #{campId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPhone != null" >
+        parent_phone = #{parentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="parentWechat != null" >
+        parent_wechat = #{parentWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="parentAddress != null" >
+        parent_address = #{parentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.ParentInfo" >
+    update parent_info
+    set parent_name = #{parentName,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      camp_id = #{campId,jdbcType=VARCHAR},
+      parent_phone = #{parentPhone,jdbcType=VARCHAR},
+      parent_wechat = #{parentWechat,jdbcType=VARCHAR},
+      parent_address = #{parentAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

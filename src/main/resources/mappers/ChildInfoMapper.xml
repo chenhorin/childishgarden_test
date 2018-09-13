@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.ChildInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.ChildInfo" >
+    <constructor >
+      <idArg column="child_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_gender" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="camp_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_status" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    child_id, child_name, user_id, user_name, child_gender, camp_id, child_status, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from child_info
+    where child_id = #{childId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from child_info
+    where child_id = #{childId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.ChildInfo" >
+    insert into child_info (child_id, child_name, user_id, 
+      user_name, child_gender, camp_id, 
+      child_status, create_time, update_time
+      )
+    values (#{childId,jdbcType=VARCHAR}, #{childName,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{childGender,jdbcType=TINYINT}, #{campId,jdbcType=VARCHAR}, 
+      #{childStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.ChildInfo" >
+    insert into child_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="childId != null" >
+        child_id,
+      </if>
+      <if test="childName != null" >
+        child_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="childGender != null" >
+        child_gender,
+      </if>
+      <if test="campId != null" >
+        camp_id,
+      </if>
+      <if test="childStatus != null" >
+        child_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="childId != null" >
+        #{childId,jdbcType=VARCHAR},
+      </if>
+      <if test="childName != null" >
+        #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="childGender != null" >
+        #{childGender,jdbcType=TINYINT},
+      </if>
+      <if test="campId != null" >
+        #{campId,jdbcType=VARCHAR},
+      </if>
+      <if test="childStatus != null" >
+        #{childStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.ChildInfo" >
+    update child_info
+    <set >
+      <if test="childName != null" >
+        child_name = #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="childGender != null" >
+        child_gender = #{childGender,jdbcType=TINYINT},
+      </if>
+      <if test="campId != null" >
+        camp_id = #{campId,jdbcType=VARCHAR},
+      </if>
+      <if test="childStatus != null" >
+        child_status = #{childStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where child_id = #{childId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.ChildInfo" >
+    update child_info
+    set child_name = #{childName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      child_gender = #{childGender,jdbcType=TINYINT},
+      camp_id = #{campId,jdbcType=VARCHAR},
+      child_status = #{childStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where child_id = #{childId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.SchoolCampInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.SchoolCampInfo" >
+    <constructor >
+      <idArg column="camp_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="camp_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="camp_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    camp_id, camp_name, camp_address, user_id, user_name, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from school_camp_info
+    where camp_id = #{campId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from school_camp_info
+    where camp_id = #{campId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.SchoolCampInfo" >
+    insert into school_camp_info (camp_id, camp_name, camp_address, 
+      user_id, user_name, create_time, 
+      update_time)
+    values (#{campId,jdbcType=VARCHAR}, #{campName,jdbcType=VARCHAR}, #{campAddress,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.SchoolCampInfo" >
+    insert into school_camp_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="campId != null" >
+        camp_id,
+      </if>
+      <if test="campName != null" >
+        camp_name,
+      </if>
+      <if test="campAddress != null" >
+        camp_address,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="campId != null" >
+        #{campId,jdbcType=VARCHAR},
+      </if>
+      <if test="campName != null" >
+        #{campName,jdbcType=VARCHAR},
+      </if>
+      <if test="campAddress != null" >
+        #{campAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.SchoolCampInfo" >
+    update school_camp_info
+    <set >
+      <if test="campName != null" >
+        camp_name = #{campName,jdbcType=VARCHAR},
+      </if>
+      <if test="campAddress != null" >
+        camp_address = #{campAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where camp_id = #{campId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.SchoolCampInfo" >
+    update school_camp_info
+    set camp_name = #{campName,jdbcType=VARCHAR},
+      camp_address = #{campAddress,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where camp_id = #{campId,jdbcType=VARCHAR}
+  </update>
+</mapper>

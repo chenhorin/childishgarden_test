@@ -19,6 +19,8 @@ public enum ResultEnum {
     NEED_LOGIN(20,"需要登陆"),
 
     PARAM_ERROR(21, "参数不正确"),
+
+    INFO_BY_BACK(22,"后台提示"),
     ;
 
     private Integer code;

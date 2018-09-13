@@ -1,18 +1,26 @@
 package net.codingtech.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import net.codingtech.VO.CurriculumDetailVO;
+import net.codingtech.VO.CurriculumListVO;
 import net.codingtech.convert.Curriculum2CurriculumDTOConverter;
-import net.codingtech.dao.CurriculumDetailDao;
-import net.codingtech.dao.CurriculumInfoDao;
-import net.codingtech.dataobject.CurriculumDetail;
-import net.codingtech.dataobject.CurriculumInfo;
+import net.codingtech.dao.CurriculumDetailRepository;
+import net.codingtech.dao.CurriculumInfoRepository;
+import net.codingtech.dao.mapper.CurriculumDetailMapper;
+import net.codingtech.dao.mapper.CurriculumInfoMapper;
+import net.codingtech.pojo.CurriculumDetail;
+import net.codingtech.pojo.CurriculumInfo;
 import net.codingtech.dto.CurriculumDTO;
 import net.codingtech.common.enums.CurriculumStatusEnum;
 import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.exception.CurriculumException;
-import net.codingtech.service.CurriculumService;
+import net.codingtech.service.ICurriculumService;
 import net.codingtech.specification.TestCurriculumInfoDaoSpec;
 import net.codingtech.utils.KeyUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,22 +39,24 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class CurriculumServiceImpl implements CurriculumService {
+public class CurriculumServiceImpl implements ICurriculumService {
 
     @Autowired
-    private CurriculumInfoDao curriculumInfoDao;
+    private CurriculumInfoRepository curriculumInfoRepository;
 
     @Autowired
-    private CurriculumDetailDao curriculumDetailDao;
+    private CurriculumDetailRepository curriculumDetailRepository;
 
+    @Autowired
+    private CurriculumInfoMapper curriculumInfoMapper;
 
     @Override
     public CurriculumDTO findOne(String curriculumId) {
-        CurriculumInfo curriculumInfo = curriculumInfoDao.findOne(curriculumId);
+        CurriculumInfo curriculumInfo = curriculumInfoRepository.findOne(curriculumId);
         if (curriculumInfo == null) {
             throw new CurriculumException(ResultEnum.CURRICULUM_NOT_EXIST);
         }
-        List<CurriculumDetail> curriculumDetailList = curriculumDetailDao.findByCurriculumId(curriculumId);
+        List<CurriculumDetail> curriculumDetailList = curriculumDetailRepository.findByCurriculumId(curriculumId);
         if (CollectionUtils.isEmpty(curriculumDetailList)) {
             throw new CurriculumException(ResultEnum.CURRICULUM_DETAIL_NOT_EXIST);
         }
@@ -57,19 +67,18 @@ public class CurriculumServiceImpl implements CurriculumService {
 
     @Override
     public Page<CurriculumDTO> findUpAll(Pageable pageable) {
-
-        List<CurriculumInfo> curriculumInfoList = curriculumInfoDao.
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.
                 findByCurriculumStatus(CurriculumStatusEnum.UP.getCode());
         List<CurriculumDTO> curriculumDTOList = Curriculum2CurriculumDTOConverter.convert(curriculumInfoList);
-        return new PageImpl<CurriculumDTO>(curriculumDTOList,pageable,curriculumDTOList.size());
+        return new PageImpl<CurriculumDTO>(curriculumDTOList, pageable, curriculumDTOList.size());
     }
 
     @Override
     public Page<CurriculumDTO> findList(Pageable pageable) {
 
-        List<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findAll();
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findAll();
         List<CurriculumDTO> curriculumDTOList = Curriculum2CurriculumDTOConverter.convert(curriculumInfoList);
-        return new PageImpl<CurriculumDTO>(curriculumDTOList,pageable,curriculumDTOList.size());
+        return new PageImpl<CurriculumDTO>(curriculumDTOList, pageable, curriculumDTOList.size());
     }
 
     @Override
@@ -83,9 +92,9 @@ public class CurriculumServiceImpl implements CurriculumService {
         curriculumInfo.setCurriculumProperty(curriculumDTO.getCurriculumProperty());
         curriculumInfo.setCategoryId(curriculumDTO.getCategoryId());
 
-        Page<CurriculumInfo> curriculumInfoList = curriculumInfoDao.findAll(TestCurriculumInfoDaoSpec.getSpec(curriculumInfo), pageable);//通过三个条件
+        Page<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findAll(TestCurriculumInfoDaoSpec.getSpec(curriculumInfo), pageable);//通过三个条件
         List<CurriculumDTO> curriculumDTOList = Curriculum2CurriculumDTOConverter.convert(curriculumInfoList.getContent());
-        return new PageImpl<CurriculumDTO>(curriculumDTOList,pageable,curriculumInfoList.getTotalElements());
+        return new PageImpl<CurriculumDTO>(curriculumDTOList, pageable, curriculumInfoList.getTotalElements());
 
     }
 
@@ -101,7 +110,7 @@ public class CurriculumServiceImpl implements CurriculumService {
         CurriculumInfo curriculumInfo = new CurriculumInfo();
         BeanUtils.copyProperties(curriculumDTO, curriculumInfo);
 //       因为DTO的信息没有那么全,所以需要自行补上,例如id需要自己添加
-        curriculumInfoDao.save(curriculumInfo);
+        curriculumInfoRepository.save(curriculumInfo);
 //      写入课程详情库
 //        TODO 还需要判断详情具体的书记这些的条件是什么情况
         for (CurriculumDetail curriculumDetail : curriculumDTO.getCurriculumDetailList()) {
@@ -109,7 +118,7 @@ public class CurriculumServiceImpl implements CurriculumService {
             curriculumDetail.setCurriculumId(curriculumId);
 
 //            curriculumDetail.getBookId();是否需要做库存管理?
-            curriculumDetailDao.save(curriculumDetail);
+            curriculumDetailRepository.save(curriculumDetail);
         }
 
         return curriculumDTO;
@@ -117,7 +126,7 @@ public class CurriculumServiceImpl implements CurriculumService {
 
     @Override
     public CurriculumInfo onUsing(String curriculumId) {
-        CurriculumInfo curriculumInfo = curriculumInfoDao.findOne(curriculumId);
+        CurriculumInfo curriculumInfo = curriculumInfoRepository.findOne(curriculumId);
         if (curriculumInfo == null) {
             throw new CurriculumException(ResultEnum.CURRICULUM_NO_FOUND);
         }
@@ -127,12 +136,12 @@ public class CurriculumServiceImpl implements CurriculumService {
 
         //更新
         curriculumInfo.setCurriculumStatus(CurriculumStatusEnum.UP.getCode());
-        return curriculumInfoDao.save(curriculumInfo);
+        return curriculumInfoRepository.save(curriculumInfo);
     }
 
     @Override
     public CurriculumInfo offUsing(String curriculumId) {
-        CurriculumInfo curriculumInfo = curriculumInfoDao.findOne(curriculumId);
+        CurriculumInfo curriculumInfo = curriculumInfoRepository.findOne(curriculumId);
         if (curriculumInfo == null) {
             throw new CurriculumException(ResultEnum.CURRICULUM_NO_FOUND);
         }
@@ -142,6 +151,67 @@ public class CurriculumServiceImpl implements CurriculumService {
 
         //更新
         curriculumInfo.setCurriculumStatus(CurriculumStatusEnum.DOWN.getCode());
-        return curriculumInfoDao.save(curriculumInfo);
+        return curriculumInfoRepository.save(curriculumInfo);
+    }
+
+    @Override
+    public PageInfo getCurriculumList(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findAll();
+
+        List<CurriculumListVO> curriculumListVOList = Lists.newArrayList();
+        for (CurriculumInfo curriculumInfo : curriculumInfoList) {
+            CurriculumListVO curriculumListVO = new CurriculumListVO();
+            BeanUtils.copyProperties(curriculumInfo, curriculumListVO);
+            curriculumListVOList.add(curriculumListVO);
+        }
+        PageInfo pageResult = new PageInfo(curriculumInfoList);
+        pageResult.setList(curriculumListVOList);
+        return pageResult;
+    }
+
+    @Override
+    public PageInfo searchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        if (StringUtils.isNotBlank(curriculumName)) {
+            curriculumName = new StringBuilder().append("%").append(curriculumName).append("%").toString();
+        }
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndProductId(curriculumName, curriculumId);
+        List<CurriculumListVO> curriculumListVOList = Lists.newArrayList();
+        for (CurriculumInfo curriculumInfo : curriculumInfoList) {
+            CurriculumListVO curriculumListVO = new CurriculumListVO();
+            BeanUtils.copyProperties(curriculumInfo, curriculumListVO);
+            curriculumListVOList.add(curriculumListVO);
+        }
+        PageInfo pageResult = new PageInfo(curriculumInfoList);
+        pageResult.setList(curriculumListVOList);
+        return pageResult;
+    }
+
+    @Override
+    public CurriculumDetailVO manageCurriculumDetail(String curriculumId) {
+
+        if (curriculumId == null) {
+            throw new CurriculumException(ResultEnum.PARAM_ERROR);
+        }
+
+        CurriculumInfo curriculumInfo = curriculumInfoMapper.selectByPrimaryKey(curriculumId);
+
+        if (curriculumInfo == null) {
+            throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "课程不存在");
+        }
+        List<CurriculumDetail> curriculumDetailList = curriculumDetailRepository.findByCurriculumId(curriculumId);
+
+        if (CollectionUtils.isEmpty(curriculumDetailList)) {
+            throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "未查询到需要准备的材料");
+        }
+
+        CurriculumDTO curriculumDTO = new CurriculumDTO();
+        BeanUtils.copyProperties(curriculumInfo, curriculumDTO);
+        curriculumDTO.setCurriculumDetailList(curriculumDetailList);
+
+        CurriculumDetailVO curriculumDetailVO = new CurriculumDetailVO();
+        BeanUtils.copyProperties(curriculumDTO,curriculumDetailVO);
+        return curriculumDetailVO;
     }
 }

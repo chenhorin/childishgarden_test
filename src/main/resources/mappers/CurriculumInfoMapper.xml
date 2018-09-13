@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.CurriculumInfoMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.CurriculumInfo" >
+    <constructor >
+      <idArg column="curriculum_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_property" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_difficulty" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="curriculum_status" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="curriculum_plan" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_description" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_prepare" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="activity_step" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="activity_target" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="activity_target2" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_target" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="curriculum_element" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_age" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="category_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    curriculum_id, curriculum_name, curriculum_property, user_id, user_name, curriculum_difficulty, 
+    curriculum_status, category_id, curriculum_plan, curriculum_description, curriculum_prepare, 
+    activity_step, activity_target, activity_target2, curriculum_target, create_time, 
+    update_time, curriculum_element, curriculum_age, category_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from curriculum_info
+    where curriculum_id = #{curriculumId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from curriculum_info
+    where curriculum_id = #{curriculumId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.CurriculumInfo" >
+    insert into curriculum_info (curriculum_id, curriculum_name, curriculum_property, 
+      user_id, user_name, curriculum_difficulty, 
+      curriculum_status, category_id, curriculum_plan, 
+      curriculum_description, curriculum_prepare, 
+      activity_step, activity_target, activity_target2, 
+      curriculum_target, create_time, update_time, 
+      curriculum_element, curriculum_age, category_name
+      )
+    values (#{curriculumId,jdbcType=VARCHAR}, #{curriculumName,jdbcType=VARCHAR}, #{curriculumProperty,jdbcType=TINYINT}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{curriculumDifficulty,jdbcType=TINYINT}, 
+      #{curriculumStatus,jdbcType=TINYINT}, #{categoryId,jdbcType=INTEGER}, #{curriculumPlan,jdbcType=VARCHAR}, 
+      #{curriculumDescription,jdbcType=VARCHAR}, #{curriculumPrepare,jdbcType=VARCHAR}, 
+      #{activityStep,jdbcType=VARCHAR}, #{activityTarget,jdbcType=VARCHAR}, #{activityTarget2,jdbcType=VARCHAR}, 
+      #{curriculumTarget,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{curriculumElement,jdbcType=VARCHAR}, #{curriculumAge,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.CurriculumInfo" >
+    insert into curriculum_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="curriculumId != null" >
+        curriculum_id,
+      </if>
+      <if test="curriculumName != null" >
+        curriculum_name,
+      </if>
+      <if test="curriculumProperty != null" >
+        curriculum_property,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="curriculumDifficulty != null" >
+        curriculum_difficulty,
+      </if>
+      <if test="curriculumStatus != null" >
+        curriculum_status,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="curriculumPlan != null" >
+        curriculum_plan,
+      </if>
+      <if test="curriculumDescription != null" >
+        curriculum_description,
+      </if>
+      <if test="curriculumPrepare != null" >
+        curriculum_prepare,
+      </if>
+      <if test="activityStep != null" >
+        activity_step,
+      </if>
+      <if test="activityTarget != null" >
+        activity_target,
+      </if>
+      <if test="activityTarget2 != null" >
+        activity_target2,
+      </if>
+      <if test="curriculumTarget != null" >
+        curriculum_target,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="curriculumElement != null" >
+        curriculum_element,
+      </if>
+      <if test="curriculumAge != null" >
+        curriculum_age,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="curriculumId != null" >
+        #{curriculumId,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumName != null" >
+        #{curriculumName,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumProperty != null" >
+        #{curriculumProperty,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumDifficulty != null" >
+        #{curriculumDifficulty,jdbcType=TINYINT},
+      </if>
+      <if test="curriculumStatus != null" >
+        #{curriculumStatus,jdbcType=TINYINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="curriculumPlan != null" >
+        #{curriculumPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumDescription != null" >
+        #{curriculumDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumPrepare != null" >
+        #{curriculumPrepare,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStep != null" >
+        #{activityStep,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTarget != null" >
+        #{activityTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTarget2 != null" >
+        #{activityTarget2,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumTarget != null" >
+        #{curriculumTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="curriculumElement != null" >
+        #{curriculumElement,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumAge != null" >
+        #{curriculumAge,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.CurriculumInfo" >
+    update curriculum_info
+    <set >
+      <if test="curriculumName != null" >
+        curriculum_name = #{curriculumName,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumProperty != null" >
+        curriculum_property = #{curriculumProperty,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumDifficulty != null" >
+        curriculum_difficulty = #{curriculumDifficulty,jdbcType=TINYINT},
+      </if>
+      <if test="curriculumStatus != null" >
+        curriculum_status = #{curriculumStatus,jdbcType=TINYINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="curriculumPlan != null" >
+        curriculum_plan = #{curriculumPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumDescription != null" >
+        curriculum_description = #{curriculumDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumPrepare != null" >
+        curriculum_prepare = #{curriculumPrepare,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStep != null" >
+        activity_step = #{activityStep,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTarget != null" >
+        activity_target = #{activityTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTarget2 != null" >
+        activity_target2 = #{activityTarget2,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumTarget != null" >
+        curriculum_target = #{curriculumTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="curriculumElement != null" >
+        curriculum_element = #{curriculumElement,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumAge != null" >
+        curriculum_age = #{curriculumAge,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where curriculum_id = #{curriculumId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.CurriculumInfo" >
+    update curriculum_info
+    set curriculum_name = #{curriculumName,jdbcType=VARCHAR},
+      curriculum_property = #{curriculumProperty,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      curriculum_difficulty = #{curriculumDifficulty,jdbcType=TINYINT},
+      curriculum_status = #{curriculumStatus,jdbcType=TINYINT},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      curriculum_plan = #{curriculumPlan,jdbcType=VARCHAR},
+      curriculum_description = #{curriculumDescription,jdbcType=VARCHAR},
+      curriculum_prepare = #{curriculumPrepare,jdbcType=VARCHAR},
+      activity_step = #{activityStep,jdbcType=VARCHAR},
+      activity_target = #{activityTarget,jdbcType=VARCHAR},
+      activity_target2 = #{activityTarget2,jdbcType=VARCHAR},
+      curriculum_target = #{curriculumTarget,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      curriculum_element = #{curriculumElement,jdbcType=VARCHAR},
+      curriculum_age = #{curriculumAge,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR}
+    where curriculum_id = #{curriculumId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from curriculum_info
+    <where>
+      <if test="productName != null">
+        and name like #{curriculum_name}
+      </if>
+      <if test="productId != null">
+        and id = #{curriculum_id}
+      </if>
+    </where>
+  </select>
+</mapper>

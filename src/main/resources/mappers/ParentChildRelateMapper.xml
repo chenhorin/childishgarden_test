@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.ParentChildRelateMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.ParentChildRelate" >
+    <constructor >
+      <idArg column="relate_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="relationship" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    relate_id, parent_id, parent_name, child_id, child_name, relationship, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parent_child_relate
+    where relate_id = #{relateId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parent_child_relate
+    where relate_id = #{relateId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.ParentChildRelate" >
+    insert into parent_child_relate (relate_id, parent_id, parent_name, 
+      child_id, child_name, relationship, 
+      create_time, update_time)
+    values (#{relateId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{parentName,jdbcType=VARCHAR}, 
+      #{childId,jdbcType=VARCHAR}, #{childName,jdbcType=VARCHAR}, #{relationship,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.ParentChildRelate" >
+    insert into parent_child_relate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="relateId != null" >
+        relate_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parentName != null" >
+        parent_name,
+      </if>
+      <if test="childId != null" >
+        child_id,
+      </if>
+      <if test="childName != null" >
+        child_name,
+      </if>
+      <if test="relationship != null" >
+        relationship,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="relateId != null" >
+        #{relateId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="childId != null" >
+        #{childId,jdbcType=VARCHAR},
+      </if>
+      <if test="childName != null" >
+        #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.ParentChildRelate" >
+    update parent_child_relate
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentName != null" >
+        parent_name = #{parentName,jdbcType=VARCHAR},
+      </if>
+      <if test="childId != null" >
+        child_id = #{childId,jdbcType=VARCHAR},
+      </if>
+      <if test="childName != null" >
+        child_name = #{childName,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where relate_id = #{relateId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.ParentChildRelate" >
+    update parent_child_relate
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      parent_name = #{parentName,jdbcType=VARCHAR},
+      child_id = #{childId,jdbcType=VARCHAR},
+      child_name = #{childName,jdbcType=VARCHAR},
+      relationship = #{relationship,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where relate_id = #{relateId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,6 +1,6 @@
 package net.codingtech.dao;
 
-import net.codingtech.dataobject.CurriculumCategory;
+import net.codingtech.pojo.CurriculumCategory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CurriculumCategoryDaoTest {
 
     @Autowired
-    private CurriculumCategoryDao curriculumCategoryDao;
+    private CurriculumCategoryRepository curriculumCategoryDao;
 
     @Test
     public void findOneTest() {

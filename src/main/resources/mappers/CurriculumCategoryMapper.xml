@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.CurriculumCategoryMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.CurriculumCategory" >
+    <constructor >
+      <idArg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="is_parent" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="sort_order" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="parent_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="category_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="category_elements" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="category_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    category_id, is_parent, sort_order, parent_id, category_name, category_elements, 
+    category_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from curriculum_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from curriculum_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.CurriculumCategory" >
+    insert into curriculum_category (category_id, is_parent, sort_order, 
+      parent_id, category_name, category_elements, 
+      category_status, create_time, update_time
+      )
+    values (#{categoryId,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, #{categoryElements,jdbcType=VARCHAR}, 
+      #{categoryStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.CurriculumCategory" >
+    insert into curriculum_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="isParent != null" >
+        is_parent,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryElements != null" >
+        category_elements,
+      </if>
+      <if test="categoryStatus != null" >
+        category_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="isParent != null" >
+        #{isParent,jdbcType=BIT},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryElements != null" >
+        #{categoryElements,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryStatus != null" >
+        #{categoryStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.CurriculumCategory" >
+    update curriculum_category
+    <set >
+      <if test="isParent != null" >
+        is_parent = #{isParent,jdbcType=BIT},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryElements != null" >
+        category_elements = #{categoryElements,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryStatus != null" >
+        category_status = #{categoryStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.CurriculumCategory" >
+    update curriculum_category
+    set is_parent = #{isParent,jdbcType=BIT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      category_elements = #{categoryElements,jdbcType=VARCHAR},
+      category_status = #{categoryStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

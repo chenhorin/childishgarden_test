@@ -1,6 +1,6 @@
 package net.codingtech.convert;
 
-import net.codingtech.dataobject.CourseSelection;
+import net.codingtech.pojo.CourseSelection;
 import net.codingtech.dto.CourseSelectionDTO;
 import net.codingtech.utils.TimeUtil;
 

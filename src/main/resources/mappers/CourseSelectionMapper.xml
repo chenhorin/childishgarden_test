@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.codingtech.dao.mapper.CourseSelectionMapper" >
+  <resultMap id="BaseResultMap" type="net.codingtech.pojo.CourseSelection" >
+    <constructor >
+      <idArg column="detail_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="class_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="class_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="child_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="classroom" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="course_day" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="course_num" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="course_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    detail_id, curriculum_id, curriculum_name, user_id, user_name, class_id, class_name, 
+    child_id, classroom, course_day, course_num, course_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course_selection
+    where detail_id = #{detailId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course_selection
+    where detail_id = #{detailId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="net.codingtech.pojo.CourseSelection" >
+    insert into course_selection (detail_id, curriculum_id, curriculum_name, 
+      user_id, user_name, class_id, 
+      class_name, child_id, classroom, 
+      course_day, course_num, course_status, 
+      create_time, update_time)
+    values (#{detailId,jdbcType=VARCHAR}, #{curriculumId,jdbcType=VARCHAR}, #{curriculumName,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, 
+      #{className,jdbcType=VARCHAR}, #{childId,jdbcType=VARCHAR}, #{classroom,jdbcType=VARCHAR}, 
+      #{courseDay,jdbcType=DATE}, #{courseNum,jdbcType=TINYINT}, #{courseStatus,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.codingtech.pojo.CourseSelection" >
+    insert into course_selection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="curriculumId != null" >
+        curriculum_id,
+      </if>
+      <if test="curriculumName != null" >
+        curriculum_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="childId != null" >
+        child_id,
+      </if>
+      <if test="classroom != null" >
+        classroom,
+      </if>
+      <if test="courseDay != null" >
+        course_day,
+      </if>
+      <if test="courseNum != null" >
+        course_num,
+      </if>
+      <if test="courseStatus != null" >
+        course_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="detailId != null" >
+        #{detailId,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumId != null" >
+        #{curriculumId,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumName != null" >
+        #{curriculumName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="childId != null" >
+        #{childId,jdbcType=VARCHAR},
+      </if>
+      <if test="classroom != null" >
+        #{classroom,jdbcType=VARCHAR},
+      </if>
+      <if test="courseDay != null" >
+        #{courseDay,jdbcType=DATE},
+      </if>
+      <if test="courseNum != null" >
+        #{courseNum,jdbcType=TINYINT},
+      </if>
+      <if test="courseStatus != null" >
+        #{courseStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="net.codingtech.pojo.CourseSelection" >
+    update course_selection
+    <set >
+      <if test="curriculumId != null" >
+        curriculum_id = #{curriculumId,jdbcType=VARCHAR},
+      </if>
+      <if test="curriculumName != null" >
+        curriculum_name = #{curriculumName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="childId != null" >
+        child_id = #{childId,jdbcType=VARCHAR},
+      </if>
+      <if test="classroom != null" >
+        classroom = #{classroom,jdbcType=VARCHAR},
+      </if>
+      <if test="courseDay != null" >
+        course_day = #{courseDay,jdbcType=DATE},
+      </if>
+      <if test="courseNum != null" >
+        course_num = #{courseNum,jdbcType=TINYINT},
+      </if>
+      <if test="courseStatus != null" >
+        course_status = #{courseStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where detail_id = #{detailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.codingtech.pojo.CourseSelection" >
+    update course_selection
+    set curriculum_id = #{curriculumId,jdbcType=VARCHAR},
+      curriculum_name = #{curriculumName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=VARCHAR},
+      class_name = #{className,jdbcType=VARCHAR},
+      child_id = #{childId,jdbcType=VARCHAR},
+      classroom = #{classroom,jdbcType=VARCHAR},
+      course_day = #{courseDay,jdbcType=DATE},
+      course_num = #{courseNum,jdbcType=TINYINT},
+      course_status = #{courseStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where detail_id = #{detailId,jdbcType=VARCHAR}
+  </update>
+</mapper>

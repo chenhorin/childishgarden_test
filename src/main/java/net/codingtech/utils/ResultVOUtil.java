@@ -26,4 +26,5 @@ public class ResultVOUtil {
     public static ResultVO error(ResultEnum resultEnum) {
         return error(resultEnum.getCode(), resultEnum.getMessage());
     }
+
 }

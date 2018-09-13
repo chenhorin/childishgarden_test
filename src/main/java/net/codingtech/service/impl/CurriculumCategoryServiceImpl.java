@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.codingtech.common.enums.CurriculumCategoryEnum;
 import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.dao.CurriculumCategoryDao;
-import net.codingtech.dataobject.CurriculumCategory;
+import net.codingtech.dao.CurriculumCategoryRepository;
+import net.codingtech.pojo.CurriculumCategory;
 import net.codingtech.exception.CurriculumException;
-import net.codingtech.service.CurriculumCategoryService;
+import net.codingtech.service.ICurriculumCategoryService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ import java.util.Set;
  * @create: 2018-08-14 16:08
  **/
 @Service
-public class CurriculumCategoryServiceImpl implements CurriculumCategoryService {
+public class CurriculumCategoryServiceImpl implements ICurriculumCategoryService {
 
     @Autowired
-    CurriculumCategoryDao curriculumCategoryDao;
+    CurriculumCategoryRepository curriculumCategoryDao;
 
 
     @Override

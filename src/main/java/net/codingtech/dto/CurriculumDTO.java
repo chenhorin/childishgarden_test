@@ -1,7 +1,7 @@
 package net.codingtech.dto;
 
 import lombok.Data;
-import net.codingtech.dataobject.CurriculumDetail;
+import net.codingtech.pojo.CurriculumDetail;
 
 import java.util.Date;
 import java.util.List;

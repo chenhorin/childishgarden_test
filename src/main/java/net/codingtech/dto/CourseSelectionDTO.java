@@ -1,7 +1,7 @@
 package net.codingtech.dto;
 
 import lombok.Data;
-import net.codingtech.dataobject.CourseSelection;
+import net.codingtech.pojo.CourseSelection;
 
 import java.util.List;
 
