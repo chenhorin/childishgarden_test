@@ -2,6 +2,7 @@ package net.codingtech.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import net.codingtech.VO.CurriculumCategoryTreeVO;
 import net.codingtech.common.enums.CurriculumCategoryEnum;
 import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.dao.CurriculumCategoryRepository;
@@ -15,6 +16,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @program: childishgarden_test
@@ -113,15 +115,34 @@ public class CurriculumCategoryServiceImpl implements ICurriculumCategoryService
     }
 
     //封装成Eazyui的格式,返回给前端的视图对象
-   /* public List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId) {
+    @Override
+    public List<CurriculumCategoryTreeVO> findCurriculumCategoryElement(Integer parentId) {
         List<CurriculumCategory> curriculumCategoryList = curriculumCategoryDao.findByParentId(parentId);
-
+//      应该是需要转化成数组的?后端获取多选框后需要从json格式转化
         List<CurriculumCategoryTreeVO> curriculumCategoryTreeVOList = curriculumCategoryList.stream().map(e ->
-                new CurriculumCategoryTreeVO(e.getParentId(), e.getCategoryName(), e.getIsParent() ? "closed" : "open"))
+                new CurriculumCategoryTreeVO(e.getParentId(),
+                        e.getCategoryId(),
+                        e.getCategoryName(),
+                        e.getIsParent() ? "closed" : "open",
+                        e.getIsParent() ? e.getCategoryElements() : null))
                 .collect(Collectors.toList());
 
         return curriculumCategoryTreeVOList;
-    }*/
+    }
+
+    @Override
+    public List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId) {
+        List<CurriculumCategory> curriculumCategoryList = curriculumCategoryDao.findByParentId(parentId);
+
+        List<CurriculumCategoryTreeVO> curriculumCategoryTreeVOList = curriculumCategoryList.stream().map(e ->
+                new CurriculumCategoryTreeVO(e.getParentId(),
+                        e.getCategoryId(),
+                        e.getCategoryName(),
+                        e.getIsParent() ? "closed" : "open"))
+                .collect(Collectors.toList());
+
+        return curriculumCategoryTreeVOList;
+    }
 
     @Override
     public List<Integer> getCategoryAndDeepChildrenCategory(Integer categoryId) {

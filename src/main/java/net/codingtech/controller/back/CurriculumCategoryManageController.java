@@ -103,7 +103,7 @@ public class CurriculumCategoryManageController {
 //        }else{
 //            return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
 //        }
-        return ResultVOUtil.success(curriculumCategoryService.findAllSonCategory());
+        return ResultVOUtil.success(curriculumCategoryService.findByParentId(categoryId));
     }
 
     //查询子节点递归

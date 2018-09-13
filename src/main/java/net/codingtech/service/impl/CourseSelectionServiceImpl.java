@@ -1,23 +1,28 @@
 package net.codingtech.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import net.codingtech.common.enums.CourseSelectionStatusEnum;
+import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.convert.CourseSelection2CourseSelectionDTOConverter;
+import net.codingtech.dao.ChildInfoRepository;
 import net.codingtech.dao.CourseSelectionRepository;
 import net.codingtech.dao.CurriculumInfoRepository;
+import net.codingtech.dto.CourseSelectionDTO;
+import net.codingtech.exception.CurriculumException;
+import net.codingtech.form.portal.CourseForm;
+import net.codingtech.pojo.ChildInfo;
 import net.codingtech.pojo.CourseSelection;
 import net.codingtech.pojo.CurriculumInfo;
-import net.codingtech.dto.CourseSelectionDTO;
-import net.codingtech.common.enums.CourseSelectionStatusEnum;
-import net.codingtech.common.enums.CurriculumStatusEnum;
-import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.exception.CurriculumException;
 import net.codingtech.service.ICourseSelectionService;
 import net.codingtech.utils.KeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CourseSelectionServiceImpl implements ICourseSelectionService {
 
 
@@ -27,23 +32,36 @@ public class CourseSelectionServiceImpl implements ICourseSelectionService {
     @Autowired
     private CurriculumInfoRepository curriculumInfoRepository;
 
+    @Autowired
+    private ChildInfoRepository childInfoRepository;
     @Override
     //按班级查询课程
-    public CourseSelectionDTO findCourseByClassId(long courseTime, String classId) {
-        List<CourseSelection> oneWeekByClassId = courseSelectionRepository.findOneWeekByClassId(courseTime, classId, CurriculumStatusEnum.UP.getCode());
-        CourseSelectionDTO courseSelectionDTO = CourseSelection2CourseSelectionDTOConverter.convert(oneWeekByClassId);
+    public CourseSelectionDTO findByClassIdOrChildIdOrUserId(CourseForm courseForm) {
+        List<CourseSelection> courseSelectionList = new ArrayList();
+        if (courseForm.getUserId() != null) {
+            courseSelectionList = courseSelectionRepository.findOneWeekByUserId(courseForm.getCourseTime(),
+                    courseForm.getUserId(), CourseSelectionStatusEnum.UP.getCode());
+        }
+        if (courseForm.getClassId() != null) {
+            courseSelectionList = courseSelectionRepository.findOneWeekByClassId(courseForm.getCourseTime(),
+                    courseForm.getClassId(), CourseSelectionStatusEnum.UP.getCode());
+        }
+        if (courseForm.getChildId() != null) {
+//            实体类缺少两个字段
+//            学生的课是班级和私人的并集
+            ChildInfo childInfo = childInfoRepository.findOne(courseForm.getChildId());
+            List<CourseSelection> weekByClassId = courseSelectionRepository.findOneWeekByClassId(courseForm.getCourseTime(), childInfo.getClassId(),
+                    CourseSelectionStatusEnum.UP.getCode());
+
+            courseSelectionList = courseSelectionRepository.findOneWeekByChildId(courseForm.getCourseTime(),
+                    courseForm.getChildId(), CourseSelectionStatusEnum.UP.getCode());
+
+            for (CourseSelection courseByClass : weekByClassId) {
+                courseSelectionList.add(courseByClass);
+            }
+        }
+        CourseSelectionDTO courseSelectionDTO = CourseSelection2CourseSelectionDTOConverter.convert(courseSelectionList);
         return courseSelectionDTO;
-    }
-
-    @Override
-    public CourseSelectionDTO findCourseByChildId(long courseTime, String childId) {
-        return null;
-    }
-
-    @Override
-    //按老师查询课程
-    public CourseSelectionDTO findCourseByUserId(long courseTime, String useId) {
-        return null;
     }
 
     @Override

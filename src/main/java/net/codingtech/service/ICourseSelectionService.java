@@ -1,6 +1,7 @@
 package net.codingtech.service;
 
 
+import net.codingtech.form.portal.CourseForm;
 import net.codingtech.pojo.CourseSelection;
 import net.codingtech.dto.CourseSelectionDTO;
 
@@ -12,31 +13,12 @@ public interface ICourseSelectionService {
 
     /**
      * 按班级返回课表  当班级为空时，为私课 //需要考虑班级加其他人的情况吗?需要考虑的是不能是本班的学生
-     *这样查询个人的时候才不会重复
+     * 这样查询个人的时候才不会重复
      *
-     * @param courseTime
-     * @param classId
+     * @param courseForm
      * @return
      */
-    CourseSelectionDTO findCourseByClassId(long courseTime, String classId);
-
-    /**
-     * 按孩子返回课表  班级课表加私课
-     *
-     * @param courseTime
-     * @param childId
-     * @return
-     */
-    CourseSelectionDTO findCourseByChildId(long courseTime, String childId);
-
-    /**
-     * 按老师返回课表
-     *
-     * @param courseTime
-     * @param useId
-     * @return
-     */
-    CourseSelectionDTO findCourseByUserId(long courseTime, String useId);
+    CourseSelectionDTO findByClassIdOrChildIdOrUserId(CourseForm courseForm);
 
     /**
      * 查找单节课

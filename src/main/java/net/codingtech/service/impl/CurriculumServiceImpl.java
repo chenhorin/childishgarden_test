@@ -6,21 +6,24 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import net.codingtech.VO.CurriculumDetailVO;
 import net.codingtech.VO.CurriculumListVO;
+import net.codingtech.common.config.Const;
+import net.codingtech.common.enums.CurriculumStatusEnum;
+import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.convert.Curriculum2CurriculumDTOConverter;
 import net.codingtech.dao.CurriculumDetailRepository;
 import net.codingtech.dao.CurriculumInfoRepository;
-import net.codingtech.dao.mapper.CurriculumDetailMapper;
+import net.codingtech.dao.mapper.CurriculumCategoryMapper;
 import net.codingtech.dao.mapper.CurriculumInfoMapper;
+import net.codingtech.dto.CurriculumDTO;
+import net.codingtech.exception.CurriculumException;
+import net.codingtech.pojo.CurriculumCategory;
 import net.codingtech.pojo.CurriculumDetail;
 import net.codingtech.pojo.CurriculumInfo;
-import net.codingtech.dto.CurriculumDTO;
-import net.codingtech.common.enums.CurriculumStatusEnum;
-import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.exception.CurriculumException;
+import net.codingtech.service.ICurriculumCategoryService;
 import net.codingtech.service.ICurriculumService;
 import net.codingtech.specification.TestCurriculumInfoDaoSpec;
 import net.codingtech.utils.KeyUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +32,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +53,12 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     @Autowired
     private CurriculumInfoMapper curriculumInfoMapper;
+
+    @Autowired
+    private CurriculumCategoryMapper curriculumCategoryMapper;
+
+    @Autowired
+    private ICurriculumCategoryService iCurriculumCategoryService;
 
     @Override
     public CurriculumDTO findOne(String curriculumId) {
@@ -171,6 +181,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
+//    按关键字或课程id搜索
     public PageInfo searchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(curriculumName)) {
@@ -186,6 +197,54 @@ public class CurriculumServiceImpl implements ICurriculumService {
         PageInfo pageResult = new PageInfo(curriculumInfoList);
         pageResult.setList(curriculumListVOList);
         return pageResult;
+    }
+
+    @Override
+    public PageInfo getCurriculumByKeywordCategory(String keyword, Integer categoryId, Integer pageNum, Integer pageSize, String orderBy, Integer curriculumProperty, String curriculumAge) {
+        if (StringUtils.isBlank(keyword) && categoryId == null) {
+            throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "无法显示");
+        }
+        List<Integer> categoryIdList = new ArrayList<Integer>();
+
+        if (categoryId != null) {
+            CurriculumCategory curriculumCategory = curriculumCategoryMapper.selectByPrimaryKey(categoryId);
+            if (curriculumCategory == null && StringUtils.isBlank(keyword)) {
+                //没有该分类,并且还没有关键字,这个时候返回一个空的结果集,不报错
+                PageHelper.startPage(pageNum, pageSize);
+                List<CurriculumListVO> curriculumListVOList = Lists.newArrayList();
+                PageInfo pageInfo = new PageInfo(curriculumListVOList);
+                return pageInfo;
+            }
+            //递归子节点
+            categoryIdList = iCurriculumCategoryService.getCategoryAndDeepChildrenCategory(curriculumCategory.getCategoryId());
+        }
+        if (StringUtils.isNotBlank(keyword)) {
+            keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
+        }
+
+        PageHelper.startPage(pageNum, pageSize);
+        //排序处理
+        if (StringUtils.isNotBlank(orderBy)) {
+            if (Const.CurriculumListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)) {
+                String[] orderByArray = orderBy.split("_");
+                PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
+            }
+        }
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword,
+                categoryIdList.size() == 0 ? null : categoryIdList,
+                curriculumProperty == null ? null :curriculumProperty,
+                StringUtils.isBlank(curriculumAge) ? null : curriculumAge);
+
+        List<CurriculumListVO> curriculumListVOList = Lists.newArrayList();
+        for (CurriculumInfo curriculumInfo : curriculumInfoList) {
+            CurriculumListVO curriculumListVO = new CurriculumListVO();
+            BeanUtils.copyProperties(curriculumInfo, curriculumListVO);
+            curriculumListVOList.add(curriculumListVO);
+        }
+
+        PageInfo pageInfo = new PageInfo(curriculumInfoList);
+        pageInfo.setList(curriculumListVOList);
+        return pageInfo;
     }
 
     @Override
@@ -211,7 +270,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
         curriculumDTO.setCurriculumDetailList(curriculumDetailList);
 
         CurriculumDetailVO curriculumDetailVO = new CurriculumDetailVO();
-        BeanUtils.copyProperties(curriculumDTO,curriculumDetailVO);
+        BeanUtils.copyProperties(curriculumDTO, curriculumDetailVO);
         return curriculumDetailVO;
     }
 }

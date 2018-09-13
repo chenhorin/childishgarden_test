@@ -1,6 +1,7 @@
 package net.codingtech.dao.mapper;
 
 import net.codingtech.pojo.CurriculumInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,8 @@ public interface CurriculumInfoMapper {
      * 根据名字和id查询
      * @return
      */
-    List<CurriculumInfo> selectByNameAndProductId(String curriculumName, Integer curriculumId);
+    List<CurriculumInfo> selectByNameAndProductId(@Param("curriculumName")String curriculumName, @Param("curriculumId") Integer curriculumId);
+
+    List<CurriculumInfo> selectByNameAndCategoryIds(@Param("curriculumName")String curriculumName,@Param("categoryIdList")List<Integer> categoryIdList,
+                                                    @Param("curriculumProperty")Integer curriculumProperty,@Param("curriculumAge")String curriculumAge );
 }

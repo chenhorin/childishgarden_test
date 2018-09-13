@@ -11,6 +11,6 @@ public class Const {
     public static final String USERNAME = "username";
 
     public interface CurriculumListOrderBy{
-        Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
+        Set<String> CREATETIME_ASC_DESC = Sets.newHashSet("createTime_desc","createTime_asc");
     }
 }

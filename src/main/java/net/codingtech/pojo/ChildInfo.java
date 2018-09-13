@@ -37,4 +37,8 @@ public class ChildInfo {
 
     private Date updateTime;
 
+    private String classId;
+
+    private String className;
+
 }

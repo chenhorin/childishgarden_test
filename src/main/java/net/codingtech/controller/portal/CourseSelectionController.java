@@ -1,8 +1,11 @@
 package net.codingtech.controller.portal;
 
 import io.swagger.annotations.ApiOperation;
+import net.codingtech.VO.ResultVO;
 import net.codingtech.dto.CourseSelectionDTO;
+import net.codingtech.form.portal.CourseForm;
 import net.codingtech.service.ICourseSelectionService;
+import net.codingtech.utils.ResultVOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +19,9 @@ public class CourseSelectionController {
     @Autowired
     ICourseSelectionService courseSelectionService;
 
-    @ApiOperation(value="一个测试API",notes = "第一个测试api")
+    @ApiOperation(value="动态查询",notes = "第一个测试api")
     @GetMapping("/findByClassId")
-    public CourseSelectionDTO findByClassId( @RequestParam("weekTime") long courseTime, @RequestParam("classId") String classId) {
-
-        return  courseSelectionService.findCourseByClassId(courseTime,classId);
-//        return  courseSelectionService.findCourseByClassId(Long.parseLong(courseTime),classId);
+    public ResultVO findByClassId(CourseForm courseForm) {
+        return ResultVOUtil.success(courseSelectionService.findByClassIdOrChildIdOrUserId(courseForm));
     }
 }

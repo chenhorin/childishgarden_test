@@ -1,5 +1,6 @@
 package net.codingtech.service;
 
+import net.codingtech.VO.CurriculumCategoryTreeVO;
 import net.codingtech.pojo.CurriculumCategory;
 
 import java.util.List;
@@ -12,14 +13,14 @@ import java.util.List;
 public interface ICurriculumCategoryService {
 
     /**
-     * 添加商品
+     * 添加分类
      * @param curriculumCategory
      * @return
      */
     CurriculumCategory addCategory(CurriculumCategory curriculumCategory);
 
     /**
-     * 更新商品
+     * 更新分类
      * @param curriculumCategory
      * @return
      */
@@ -40,14 +41,14 @@ public interface ICurriculumCategoryService {
     List<CurriculumCategory> findAll();
 
     /**
-     * 查看底层类目
+     * 查看所有子节点
      *
      * @return
      */
     List<CurriculumCategory> findAllSonCategory();
 
     /**
-     * 查看父类目下的分类,方便分类树状打开
+     * 查看父类目下的平行分类
      *
      * @param parentId
      * @return
@@ -78,5 +79,10 @@ public interface ICurriculumCategoryService {
     CurriculumCategory offUsing(Integer categoryId);
 
 
+    //前后台新建更新时选择元素,如果是最底层叶子节点就返回元素,跟查询平行的子节点作用不同,前者的目的是查询元素,当是父节点时返回分类
+    // ,后者是查询分类
+    List<CurriculumCategoryTreeVO> findCurriculumCategoryElement(Integer parentId);
 
+    //不返回元素
+    List<CurriculumCategoryTreeVO> findCurriculumCategoryList(Integer parentId);
 }

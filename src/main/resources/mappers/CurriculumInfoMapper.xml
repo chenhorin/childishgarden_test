@@ -286,4 +286,26 @@
       </if>
     </where>
   </select>
+
+  <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from mmall_product
+    where curriculum_status = 0
+    <if test="curriculumName != null">
+      and name like #{curriculum_name}
+    </if>
+    <if test="categoryIdList != null" >
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        #{item}
+      </foreach>
+    </if>
+    <if test="curriculumProperty != null">
+      curriculum_propertty = #{curriculumProperty,jdbcType=INTEGER}
+    </if>
+    <if test="curriculumAge != null">
+      curriculum_Age = #{curriculumAge,jdbcType=TINYINT}
+    </if>
+  </select>
 </mapper>

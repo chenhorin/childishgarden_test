@@ -75,6 +75,14 @@ public interface ICurriculumService {
 
     PageInfo searchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize);
 
+    //前台课程查询接口,包括按条件筛选,关键字搜索,动态排序功能,分页
+    PageInfo getCurriculumByKeywordCategory(String keyword, Integer categoryId, Integer pageNum,
+                                         Integer pageSize, String orderBy,Integer curriculumProperty,
+                                         String curriculumAge);
+
+
+
+
     //后台使用
     CurriculumDetailVO manageCurriculumDetail(String curriculumId);
 }
