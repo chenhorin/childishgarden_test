@@ -3,6 +3,7 @@ package net.codingtech.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import net.codingtech.VO.CurriculumDetailVO;
 import net.codingtech.VO.CurriculumListVO;
@@ -10,15 +11,19 @@ import net.codingtech.common.config.Const;
 import net.codingtech.common.enums.CurriculumStatusEnum;
 import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.convert.Curriculum2CurriculumDTOConverter;
+import net.codingtech.dao.ChildInfoRepository;
 import net.codingtech.dao.CurriculumDetailRepository;
 import net.codingtech.dao.CurriculumInfoRepository;
+import net.codingtech.dao.UserInfoRepository;
 import net.codingtech.dao.mapper.CurriculumCategoryMapper;
 import net.codingtech.dao.mapper.CurriculumInfoMapper;
 import net.codingtech.dto.CurriculumDTO;
+import net.codingtech.dto.DynamicConditionDTO;
 import net.codingtech.exception.CurriculumException;
 import net.codingtech.pojo.CurriculumCategory;
 import net.codingtech.pojo.CurriculumDetail;
 import net.codingtech.pojo.CurriculumInfo;
+import net.codingtech.pojo.UserInfo;
 import net.codingtech.service.ICurriculumCategoryService;
 import net.codingtech.service.ICurriculumService;
 import net.codingtech.specification.TestCurriculumInfoDaoSpec;
@@ -33,7 +38,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @program: childishgarden_test
@@ -59,6 +66,12 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     @Autowired
     private ICurriculumCategoryService iCurriculumCategoryService;
+
+    @Autowired
+    private ChildInfoRepository childInfoRepository;
+
+    @Autowired
+    private UserInfoRepository userInfoRepository;
 
     @Override
     public CurriculumDTO findOne(String curriculumId) {
@@ -165,7 +178,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
-    public PageInfo getCurriculumList(int pageNum, int pageSize) {
+    public PageInfo manageFindCurriculumList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findAll();
 
@@ -182,7 +195,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     @Override
 //    按关键字或课程id搜索
-    public PageInfo searchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize) {
+    public PageInfo manageFindSearchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(curriculumName)) {
             curriculumName = new StringBuilder().append("%").append(curriculumName).append("%").toString();
@@ -200,7 +213,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
-    public PageInfo getCurriculumByKeywordCategory(String keyword, Integer categoryId, Integer pageNum, Integer pageSize, String orderBy, Integer curriculumProperty, String curriculumAge) {
+    public PageInfo findCurriculumByKeywordCategoryIdPropertyAge(String keyword, Integer categoryId, Integer pageNum, Integer pageSize, String orderBy, Integer curriculumProperty, String curriculumAge) {
         if (StringUtils.isBlank(keyword) && categoryId == null) {
             throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "无法显示");
         }
@@ -247,6 +260,18 @@ public class CurriculumServiceImpl implements ICurriculumService {
         return pageInfo;
     }
 
+    /*@Override
+    //TODO
+    public List<DynamicConditionDTO> getByDynamicCondition(DynamicConditionDTO dynamicConditionDTO) {
+
+        //班级查询显示学生
+        if (dynamicConditionDTO.getClassId() != null) {
+            List<ChildInfo> childInfoList = childInfoRepository.findChildInfoByClassId(dynamicConditionDTO.getClassId());
+            return childInfoList.stream().map(e -> new DynamicConditionDTO(e.getChildId(), e.getChildName()))
+                    .collect(Collectors.toList());
+        }
+    }*/
+
     @Override
     public CurriculumDetailVO manageCurriculumDetail(String curriculumId) {
 
@@ -272,5 +297,44 @@ public class CurriculumServiceImpl implements ICurriculumService {
         CurriculumDetailVO curriculumDetailVO = new CurriculumDetailVO();
         BeanUtils.copyProperties(curriculumDTO, curriculumDetailVO);
         return curriculumDetailVO;
+    }
+
+
+    //查询老师列表
+    @Override
+    public List<DynamicConditionDTO> findTeacherList(Integer campId) {
+        if (campId != null) {
+            List<UserInfo> userInfoList = userInfoRepository.findByCampId(campId);
+            List<DynamicConditionDTO> dynamicConditionDTOList = new ArrayList<>();
+            for (UserInfo userInfo : userInfoList) {
+                DynamicConditionDTO conditionDTO = new DynamicConditionDTO();
+                conditionDTO.setUserId(userInfo.getUserId());
+                conditionDTO.setUserName(userInfo.getUserName());
+
+                dynamicConditionDTOList.add(conditionDTO);
+            }
+            return dynamicConditionDTOList;
+        } else
+            throw new CurriculumException(ResultEnum.PARAM_ERROR);
+    }
+
+    @Override
+    public List<DynamicConditionDTO> findCurriculumAge() {
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findByCurriculumStatus(CurriculumStatusEnum.UP.getCode());
+        List<String> curriculumAgeList = curriculumInfoList.stream()
+                .map(e -> e.getCurriculumAge()).collect(Collectors.toList());
+        HashSet<Object> hashSet = Sets.newHashSet();
+
+        for (String curriculumAge : curriculumAgeList) {
+            hashSet.add(curriculumAge);
+        }
+
+        List<DynamicConditionDTO> dynamicConditionDTOList = new ArrayList();
+        for (Object o : hashSet) {
+            DynamicConditionDTO conditionDTO = new DynamicConditionDTO();
+            conditionDTO.setCurriculumAge((String)o);
+            dynamicConditionDTOList.add(conditionDTO);
+        }
+        return dynamicConditionDTOList;
     }
 }

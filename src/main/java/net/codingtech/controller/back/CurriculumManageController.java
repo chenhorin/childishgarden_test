@@ -1,11 +1,14 @@
 package net.codingtech.controller.back;
 
 
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import net.codingtech.VO.CurriculumDetailVO;
 import net.codingtech.VO.ResultVO;
 import net.codingtech.convert.CurriculumForm2DTOConverter;
 import net.codingtech.dto.CurriculumDTO;
-import net.codingtech.form.portal.CurriculumForm;
+import net.codingtech.form.back.CurriculumManageForm;
+import net.codingtech.pojo.CurriculumInfo;
 import net.codingtech.service.ICurriculumService;
 import net.codingtech.service.IFileService;
 import net.codingtech.utils.PropertiesUtil;
@@ -34,7 +37,8 @@ public class CurriculumManageController {
     private IFileService iFileService;
 
     @RequestMapping("/save")
-    public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumForm curriculum,
+    //后台的新增和保存
+    public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumManageForm curriculum,
                                                         BindingResult bindingResult) {
       /*  User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
@@ -54,34 +58,39 @@ public class CurriculumManageController {
         return ResultVOUtil.success(map);
     }
 
-    @RequestMapping("/on_use")
-    public ResultVO onUse(HttpSession session, String productId) {
-        return ResultVOUtil.success(iCurriculumService.onUsing(productId));
-    }
-
-    @RequestMapping("/off_use")
-    public ResultVO setStatus(HttpSession session, String productId) {
-        return ResultVOUtil.success(iCurriculumService.offUsing(productId));
-    }
-
     @RequestMapping("/detail")
-    public ResultVO getDetail(HttpSession session, String productId) {
+    public ResultVO<CurriculumDetailVO> getDetail(HttpSession session, String productId) {
         return ResultVOUtil.success(iCurriculumService.manageCurriculumDetail(productId));
     }
 
     @RequestMapping("/list")
-    protected ResultVO list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return ResultVOUtil.success(iCurriculumService.getCurriculumList(pageNum, pageSize));
+    //返回curriculumListVOList的分页对象
+    protected ResultVO<PageInfo> list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return ResultVOUtil.success(iCurriculumService.manageFindCurriculumList(pageNum, pageSize));
     }
 
     @RequestMapping("/search")
-    public ResultVO productSearch(HttpSession session, String curriculumName, Integer curriculumId,
-                                  @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    //返回curriculumListVOList的分页对象
+    public ResultVO<PageInfo> productSearch(HttpSession session, String curriculumName, Integer curriculumId,
+                                            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-        return ResultVOUtil.success(iCurriculumService.searchCurriculum(curriculumName, curriculumId, pageNum, pageSize));
+        return ResultVOUtil.success(iCurriculumService.manageFindSearchCurriculum(curriculumName, curriculumId, pageNum, pageSize));
     }
+
+    @RequestMapping("/on_use")
+    //课程的上线
+    public ResultVO<CurriculumInfo> onUse(HttpSession session, String productId) {
+        return ResultVOUtil.success(iCurriculumService.onUsing(productId));
+    }
+
+    @RequestMapping("/off_use")
+    //课程的下线
+    public ResultVO<CurriculumInfo> offUse(HttpSession session, String productId) {
+        return ResultVOUtil.success(iCurriculumService.offUsing(productId));
+    }
+
 
     @RequestMapping("/upload")
     public ResultVO upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {

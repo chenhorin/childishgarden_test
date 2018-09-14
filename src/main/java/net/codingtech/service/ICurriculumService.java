@@ -2,17 +2,117 @@ package net.codingtech.service;
 
 import com.github.pagehelper.PageInfo;
 import net.codingtech.VO.CurriculumDetailVO;
-import net.codingtech.pojo.CurriculumInfo;
 import net.codingtech.dto.CurriculumDTO;
+import net.codingtech.dto.DynamicConditionDTO;
+import net.codingtech.pojo.CurriculumInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
- * @program: childishgarden_test
  * @description: 课程服务
  * @author: hongren
  **/
 public interface ICurriculumService {
+
+
+    /**
+     * 前台课程的查询接口,
+     * 按条件筛选,按课程的性质，课程适合年龄
+     * 关键字搜索,
+     * 动态排序功能,按前台约定条件排序
+     * 分页
+     *
+     * @param keyword
+     * @param categoryId
+     * @param pageNum
+     * @param pageSize
+     * @param orderBy
+     * @param curriculumProperty
+     * @param curriculumAge
+     * @return
+     */
+    PageInfo findCurriculumByKeywordCategoryIdPropertyAge(String keyword,
+                                                          Integer categoryId,
+                                                          Integer pageNum,
+                                                          Integer pageSize,
+                                                          String orderBy,
+                                                          Integer curriculumProperty,
+                                                          String curriculumAge);
+
+//    //根据动态条件查询
+//    List<CurriculumDynamicVO> getByDynamicCondition(DynamicConditionDTO dynamicConditionDTO);
+
+    /**
+     * 根据校区查询老师列表
+     */
+    List<DynamicConditionDTO> findTeacherList(Integer campId);
+
+    /**
+     * 查询适合课程的年龄段
+     *
+     * @return
+     */
+    List<DynamicConditionDTO> findCurriculumAge();
+/*******************************************后台服务*******************************************************************/
+
+    /**
+     * 后台详情查询
+     *
+     * @param curriculumId
+     * @return
+     */
+    CurriculumDetailVO manageCurriculumDetail(String curriculumId);
+
+    /**
+     * 后台查询所有课程
+     *
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo manageFindCurriculumList(int pageNum, int pageSize);
+
+    /**
+     * 后台模糊搜索课程
+     *
+     * @param curriculumName
+     * @param curriculumId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo manageFindSearchCurriculum(String curriculumName,
+                                        Integer curriculumId,
+                                        int pageNum,
+                                        int pageSize);
+
+    /**
+     * 课程上线
+     *
+     * @param curriculumId
+     * @return
+     */
+    CurriculumInfo onUsing(String curriculumId);
+
+    /**
+     * 课程下线
+     *
+     * @param curriculumId
+     * @return
+     */
+    CurriculumInfo offUsing(String curriculumId);
+
+/*******************************************共用服务*******************************************************************/
+
+    /**
+     * 课程的修改和创建
+     *
+     * @param curriculumDTO
+     * @return
+     */
+    CurriculumDTO save(CurriculumDTO curriculumDTO);
 
     /**
      * 查询单个课程,需要单个验证,服务都需要
@@ -45,44 +145,4 @@ public interface ICurriculumService {
      * @return
      */
     Page<CurriculumDTO> findByDynamicCases(CurriculumDTO curriculumDTO, Pageable pageable);
-
-    /**
-     * 课程的修改和创建
-     *
-     * @param curriculumDTO
-     * @return
-     */
-    CurriculumDTO save(CurriculumDTO curriculumDTO);
-
-    /**
-     * 课程上线
-     *
-     * @param curriculumId
-     * @return
-     */
-    CurriculumInfo onUsing(String curriculumId);
-
-    /**
-     * 课程下线
-     *
-     * @param curriculumId
-     * @return
-     */
-    CurriculumInfo offUsing(String curriculumId);
-
-
-    PageInfo getCurriculumList(int pageNum, int pageSize);
-
-    PageInfo searchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize);
-
-    //前台课程查询接口,包括按条件筛选,关键字搜索,动态排序功能,分页
-    PageInfo getCurriculumByKeywordCategory(String keyword, Integer categoryId, Integer pageNum,
-                                         Integer pageSize, String orderBy,Integer curriculumProperty,
-                                         String curriculumAge);
-
-
-
-
-    //后台使用
-    CurriculumDetailVO manageCurriculumDetail(String curriculumId);
 }

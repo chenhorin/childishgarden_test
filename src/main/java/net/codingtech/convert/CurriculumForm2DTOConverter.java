@@ -18,6 +18,7 @@ import java.util.List;
 @Slf4j
 public class CurriculumForm2DTOConverter {
 
+    //管理form
     public static CurriculumDTO convert(CurriculumManageForm form) {
         Gson gson = new Gson();
         CurriculumDTO curriculumDTO = new CurriculumDTO();
@@ -51,6 +52,7 @@ public class CurriculumForm2DTOConverter {
         curriculumDTO.setCurriculumDetailList(curriculumDetailList);
         return curriculumDTO;
     }
+    //前台form
     public static CurriculumDTO convert(CurriculumForm curriculumForm) {
         CurriculumManageForm curriculumManageForm = new CurriculumManageForm();
         BeanUtils.copyProperties(curriculumForm,curriculumManageForm);

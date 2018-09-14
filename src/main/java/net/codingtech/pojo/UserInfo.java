@@ -29,6 +29,12 @@ public class UserInfo {
 
     private String campName;
 
+    //需要查询老师所在班级
+    private String classId;
+
+    //需要查询角色
+    private String role;
+
     private Date createTime;
 
     private Date updateTime;
