@@ -38,13 +38,18 @@ public class CourseSelectionServiceImpl implements ICourseSelectionService {
     //按班级查询课程
     public CourseSelectionDTO findByClassIdOrChildIdOrUserId(CourseForm courseForm) {
         List<CourseSelection> courseSelectionList = new ArrayList();
+
+        CourseSelectionDTO courseSelectionDTO = new CourseSelectionDTO();
         if (courseForm.getUserId() != null) {
             courseSelectionList = courseSelectionRepository.findOneWeekByUserId(courseForm.getCourseTime(),
                     courseForm.getUserId(), CourseSelectionStatusEnum.UP.getCode());
+            return CourseSelection2CourseSelectionDTOConverter.convert(courseSelectionList);
+
         }
         if (courseForm.getClassId() != null) {
             courseSelectionList = courseSelectionRepository.findOneWeekByClassId(courseForm.getCourseTime(),
                     courseForm.getClassId(), CourseSelectionStatusEnum.UP.getCode());
+            return CourseSelection2CourseSelectionDTOConverter.convert(courseSelectionList);
         }
         if (courseForm.getChildId() != null) {
 //            实体类缺少两个字段
@@ -59,9 +64,8 @@ public class CourseSelectionServiceImpl implements ICourseSelectionService {
             for (CourseSelection courseByClass : weekByClassId) {
                 courseSelectionList.add(courseByClass);
             }
-        }
-        CourseSelectionDTO courseSelectionDTO = CourseSelection2CourseSelectionDTOConverter.convert(courseSelectionList);
-        return courseSelectionDTO;
+            return CourseSelection2CourseSelectionDTOConverter.convert(courseSelectionList);
+        } else throw new CurriculumException(ResultEnum.PARAM_ERROR);
     }
 
     @Override

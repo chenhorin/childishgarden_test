@@ -125,6 +125,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     public CurriculumDTO save(CurriculumDTO curriculumDTO) {
 //      设置课程id
         String curriculumId = KeyUtil.genUniqueKey();
+        //如果是已经有的课程就不需要设置id
         if (curriculumDTO.getCurriculumId() == null) {
             curriculumDTO.setCurriculumId(curriculumId);
         }
@@ -132,15 +133,15 @@ public class CurriculumServiceImpl implements ICurriculumService {
 //      写入课程库
         CurriculumInfo curriculumInfo = new CurriculumInfo();
         BeanUtils.copyProperties(curriculumDTO, curriculumInfo);
-//       因为DTO的信息没有那么全,所以需要自行补上,例如id需要自己添加
+//      因为DTO的信息没有那么全,所以需要自行补上,例如id需要自己添加
         curriculumInfoRepository.save(curriculumInfo);
 //      写入课程详情库
-//        TODO 还需要判断详情具体的书记这些的条件是什么情况
+//        TODO 还需要判断详情的材料等信息
         for (CurriculumDetail curriculumDetail : curriculumDTO.getCurriculumDetailList()) {
             curriculumDetail.setDetailId(KeyUtil.genUniqueKey());
             curriculumDetail.setCurriculumId(curriculumId);
 
-//            curriculumDetail.getBookId();是否需要做库存管理?
+//           curriculumDetail.getBookId();是否需要做库存管理?
             curriculumDetailRepository.save(curriculumDetail);
         }
 
@@ -243,7 +244,8 @@ public class CurriculumServiceImpl implements ICurriculumService {
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
         }
-        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword,
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndCategoryIds(
+                StringUtils.isBlank(keyword) ? null : keyword,
                 categoryIdList.size() == 0 ? null : categoryIdList,
                 curriculumProperty == null ? null :curriculumProperty,
                 StringUtils.isBlank(curriculumAge) ? null : curriculumAge);

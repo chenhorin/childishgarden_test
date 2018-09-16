@@ -23,7 +23,6 @@ public class CurriculumForm2DTOConverter {
         Gson gson = new Gson();
         CurriculumDTO curriculumDTO = new CurriculumDTO();
 
-
         curriculumDTO.setCategoryId(form.getCategoryId());
         curriculumDTO.setCurriculumId(form.getCurriculumId());
         curriculumDTO.setActivityStep(form.getActivityStep());
@@ -56,6 +55,7 @@ public class CurriculumForm2DTOConverter {
     public static CurriculumDTO convert(CurriculumForm curriculumForm) {
         CurriculumManageForm curriculumManageForm = new CurriculumManageForm();
         BeanUtils.copyProperties(curriculumForm,curriculumManageForm);
+        //因为是前台传入的课程，需要默认设置为上线，之后需要根据甲方看是否需要上线审核功能
         curriculumManageForm.setCurriculumStatus(CurriculumStatusEnum.UP.getCode());
         return convert(curriculumManageForm);
     }

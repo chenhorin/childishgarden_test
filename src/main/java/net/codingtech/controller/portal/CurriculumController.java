@@ -37,7 +37,7 @@ public class CurriculumController {
     private ICurriculumCategoryService curriculumCategoryService;
 
     @RequestMapping("/save")
-    //课程保存，返回的是DTO对象，组合了课程详情，返回值得确定需要，和前端商定是否需要回调，还是需要id
+    //课程保存，返回的是DTO对象，组合了课程详情，返回值得确定需要，和前端商定是否需要回调，还是只需要id
     public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumManageForm curriculum,
                                                         BindingResult bindingResult) {
         CurriculumDTO createResult = iCurriculumService.save(CurriculumForm2DTOConverter.convert(curriculum));
