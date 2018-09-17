@@ -38,6 +38,7 @@ public class CurriculumManageController {
 
     @RequestMapping("/save")
     //后台的新增和保存
+//    ok
     public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumManageForm curriculum,
                                                         BindingResult bindingResult) {
       /*  User user = (User)session.getAttribute(Const.CURRENT_USER);
@@ -59,11 +60,13 @@ public class CurriculumManageController {
     }
 
     @RequestMapping("/detail")
-    public ResultVO<CurriculumDetailVO> getDetail(HttpSession session, String productId) {
-        return ResultVOUtil.success(iCurriculumService.manageCurriculumDetail(productId));
+//    ok
+    public ResultVO<CurriculumDetailVO> getDetail(HttpSession session, String curriculumId) {
+        return ResultVOUtil.success(iCurriculumService.manageCurriculumDetail(curriculumId));
     }
 
     @RequestMapping("/list")
+//    *ok
     //返回curriculumListVOList的分页对象
     protected ResultVO<PageInfo> list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                       @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
@@ -72,7 +75,8 @@ public class CurriculumManageController {
 
     @RequestMapping("/search")
     //返回curriculumListVOList的分页对象
-    public ResultVO<PageInfo> productSearch(HttpSession session, String curriculumName, Integer curriculumId,
+//    *ok
+    public ResultVO<PageInfo> productSearch(HttpSession session, String curriculumName, String curriculumId,
                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
@@ -81,14 +85,16 @@ public class CurriculumManageController {
 
     @RequestMapping("/on_use")
     //课程的上线
-    public ResultVO<CurriculumInfo> onUse(HttpSession session, String productId) {
-        return ResultVOUtil.success(iCurriculumService.onUsing(productId));
+//    ok
+    public ResultVO<CurriculumInfo> onUse(HttpSession session, String curriculumId) {
+        return ResultVOUtil.success(iCurriculumService.onUsing(curriculumId));
     }
 
     @RequestMapping("/off_use")
     //课程的下线
-    public ResultVO<CurriculumInfo> offUse(HttpSession session, String productId) {
-        return ResultVOUtil.success(iCurriculumService.offUsing(productId));
+//    ok
+    public ResultVO<CurriculumInfo> offUse(HttpSession session, String curriculumId) {
+        return ResultVOUtil.success(iCurriculumService.offUsing(curriculumId));
     }
 
 

@@ -5,9 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import net.codingtech.common.enums.CurriculumStatusEnum;
 import net.codingtech.common.enums.ResultEnum;
+import net.codingtech.exception.CurriculumException;
 import net.codingtech.pojo.CurriculumDetail;
 import net.codingtech.dto.CurriculumDTO;
-import net.codingtech.exception.CurriculumException;
 import net.codingtech.form.back.CurriculumManageForm;
 import net.codingtech.form.portal.CurriculumForm;
 import org.springframework.beans.BeanUtils;
@@ -23,21 +23,23 @@ public class CurriculumForm2DTOConverter {
         Gson gson = new Gson();
         CurriculumDTO curriculumDTO = new CurriculumDTO();
 
-        curriculumDTO.setCategoryId(form.getCategoryId());
         curriculumDTO.setCurriculumId(form.getCurriculumId());
+        curriculumDTO.setCurriculumName(form.getCurriculumName());
+        curriculumDTO.setCurriculumProperty(form.getCurriculumProperty());
+        curriculumDTO.setUserId(form.getUserId());
+        curriculumDTO.setUserName(form.getUserName());
+        curriculumDTO.setCurriculumDifficulty(form.getCurriculumDifficulty());
+        curriculumDTO.setCurriculumStatus(form.getCurriculumStatus());
+        curriculumDTO.setCategoryId(form.getCategoryId());
+        curriculumDTO.setCurriculumPlan(form.getCurriculumPlan());
+        curriculumDTO.setCurriculumDescription(form.getCurriculumDescription());
+        curriculumDTO.setCurriculumPrepare(form.getCurriculumPrepare());
         curriculumDTO.setActivityStep(form.getActivityStep());
         curriculumDTO.setActivityTarget(form.getActivityTarget());
         curriculumDTO.setActivityTarget2(form.getActivityTarget2());
-        curriculumDTO.setCurriculumAge(form.getCurriculumAge());
-        curriculumDTO.setCurriculumDescription(form.getCurriculumDescription());
-        curriculumDTO.setCurriculumDifficulty(form.getCurriculumDifficulty());
-        curriculumDTO.setCurriculumPrepare(form.getCurriculumPrepare());
-        curriculumDTO.setCurriculumProperty(form.getCurriculumProperty());
-        curriculumDTO.setCurriculumPlan(form.getCurriculumPlan());
         curriculumDTO.setCurriculumTarget(form.getCurriculumTarget());
-        curriculumDTO.setUserName(form.getUserName());
-        curriculumDTO.setCurriculumStatus(form.getCurriculumStatus());
-        curriculumDTO.setUserId(form.getUserId());
+        curriculumDTO.setCurriculumAge(form.getCurriculumAge());
+        curriculumDTO.setCurriculumElement(form.getCurriculumElement());
 
         List<CurriculumDetail> curriculumDetailList = new ArrayList<>();
         try {

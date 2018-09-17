@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -145,19 +146,22 @@ public class CurriculumCategoryServiceImpl implements ICurriculumCategoryService
     }
 
     @Override
-    public List<Integer> getCategoryAndDeepChildrenCategory(Integer categoryId) {
+    public List<CurriculumCategory> getCategoryAndDeepChildrenCategory(Integer categoryId) {
 
         Set<CurriculumCategory> categorySet = Sets.newHashSet();
-        findChildCategory(categorySet, categoryId);
+        categorySet = findChildCategory(categorySet, categoryId);
 
 
-        List<Integer> categoryIdList = Lists.newArrayList();
+        List<CurriculumCategory> curriculumCategories = Lists.newArrayList();
         if (categoryId != null) {
             for (CurriculumCategory categoryItem : categorySet) {
-                categoryIdList.add(categoryItem.getCategoryId());
+                curriculumCategories.add(categoryItem);
             }
         }
-        return categoryIdList;
+
+//        因为是优先插入的,所以倒序
+        Collections.reverse(curriculumCategories);
+        return curriculumCategories;
     }
 
     private Set<CurriculumCategory> findChildCategory(Set<CurriculumCategory> categorySet, Integer categoryId) {

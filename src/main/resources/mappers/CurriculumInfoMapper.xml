@@ -18,10 +18,10 @@
       <arg column="activity_target" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="activity_target2" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="curriculum_target" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_age" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="curriculum_element" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="curriculum_element" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="curriculum_age" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="category_name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
@@ -273,16 +273,16 @@
     where curriculum_id = #{curriculumId,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+  <select id="selectByNameAndCurriculumId" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"/>
     from curriculum_info
     <where>
-      <if test="productName != null">
-        and name like #{curriculum_name}
+      <if test="curriculumName != null">
+        and curriculum_name like #{curriculumName}
       </if>
-      <if test="productId != null">
-        and id = #{curriculum_id}
+      <if test="curriculumId != null">
+        and curriculum_id = #{curriculumId}
       </if>
     </where>
   </select>
@@ -290,10 +290,10 @@
   <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List"></include>
-    from mmall_product
+    from curriculum_info
     where curriculum_status = 0
     <if test="curriculumName != null">
-      and name like #{curriculum_name}
+      and curriculum_name like #{curriculumName}
     </if>
     <if test="categoryIdList != null" >
       and category_id in

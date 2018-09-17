@@ -41,6 +41,8 @@ public class CurriculumDTO {
 
     private String curriculumAge;
 
+    private String curriculumElement;
+
     private Date createTime;
 
     private Date updateTime;

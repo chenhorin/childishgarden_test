@@ -60,7 +60,7 @@ public interface ICurriculumCategoryService {
      * @param categoryId
      * @return
      */
-    List<Integer> getCategoryAndDeepChildrenCategory(Integer categoryId);
+    List<CurriculumCategory> getCategoryAndDeepChildrenCategory(Integer categoryId);
 
     /**
      * 上线类目

@@ -62,6 +62,7 @@ public class CurriculumController {
 
     @RequestMapping("/tree")
     //课程筛选时的分类选择，区别于elements因为不会显示元素
+//    ok
     public ResultVO<CurriculumCategoryTreeVO> listTree(HttpSession session, @RequestParam(value = "parentId", defaultValue = "0") Integer parentId) {
         return ResultVOUtil.success(curriculumCategoryService.findCurriculumCategoryList(parentId));
     }
@@ -74,6 +75,7 @@ public class CurriculumController {
 
     @RequestMapping("/elements")
     //创建课程的时候，显示元素，多选框在后代获取的是json数组需要，转化，展示需要分割转化
+//    ok
     public ResultVO<CurriculumCategoryTreeVO> ListElements(HttpSession session, @RequestParam(value = "parentId", defaultValue = "0") Integer parentId) {
         return ResultVOUtil.success(curriculumCategoryService.findCurriculumCategoryElement(parentId));
     }
@@ -86,6 +88,7 @@ public class CurriculumController {
 
     @RequestMapping("/age")
     //应用场景，创建课程时需要，遍历
+//    ok
     public ResultVO<List<DynamicConditionDTO>> getTeacherList() {
         return ResultVOUtil.success(iCurriculumService.findCurriculumAge());
     }
@@ -94,6 +97,7 @@ public class CurriculumController {
     //应用场景1：创建更改课程时
     //应用场景2：课程查询时的选择借口
     // 涉及到枚举值的转化问题
+// ok
     public ResultVO<List> getPropertiesList() {
         List properties = new ArrayList<>();
 
@@ -114,6 +118,7 @@ public class CurriculumController {
     //应用场景1：创建更改课程时
     //应用场景2：课程查询时的选择借口
     // 涉及到枚举值的转化问题
+//    ok
     public ResultVO<List> getDifficulty() {
         List properties = new ArrayList<>();
 

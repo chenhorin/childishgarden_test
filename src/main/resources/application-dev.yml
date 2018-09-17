@@ -6,5 +6,7 @@ spring:
     password: 123456
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
 mybatis:
-  mapper-locations: classpath:resources/mapper/*.xml
+  mapper-locations: classpath:mappers/*.xml

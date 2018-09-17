@@ -1,13 +1,12 @@
 package net.codingtech.controller.back;
 
 import net.codingtech.VO.ResultVO;
-import net.codingtech.common.config.Const;
 import net.codingtech.common.enums.ResultEnum;
-import net.codingtech.pojo.CurriculumCategory;
-import net.codingtech.pojo.UserInfo;
 import net.codingtech.exception.CurriculumException;
-import net.codingtech.form.back.CurriculumManageForm;
+import net.codingtech.form.back.CurriculumCategoryManageForm;
+import net.codingtech.pojo.CurriculumCategory;
 import net.codingtech.service.ICurriculumCategoryService;
+import net.codingtech.utils.MyStringUtil;
 import net.codingtech.utils.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,19 @@ public class CurriculumCategoryManageController {
 
 
     @RequestMapping("/add")
-    //新增分类
-    public ResultVO addCategory(HttpSession session,@Valid CurriculumManageForm categoryForm,
+    //新增分类 --初步使用ok
+    public ResultVO addCategory(HttpSession session,@Valid CurriculumCategoryManageForm categoryForm,
                                 BindingResult bindingResult){
-        UserInfo user = (UserInfo) session.getAttribute(Const.CURRENT_USER);
+        /*UserInfo user = (UserInfo) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             throw  new CurriculumException(ResultEnum.NEED_LOGIN);
-        }
+        }*/
         CurriculumCategory curriculumCategory = new CurriculumCategory();
         BeanUtils.copyProperties(categoryForm,curriculumCategory);
+
+        String[] categoryFormCategoryElements = categoryForm.getCategoryElements();
+        curriculumCategory.setCategoryElements(MyStringUtil.stringArray2StringConvert(categoryFormCategoryElements));
+
         if(curriculumCategoryService.addCategory(curriculumCategory) != null){
             return ResultVOUtil.success();
         }
@@ -44,26 +47,30 @@ public class CurriculumCategoryManageController {
     }
 
     @RequestMapping("/set")
-    //更新分类
-    public ResultVO updateCategory(HttpSession session,@Valid CurriculumManageForm categoryForm,
+    //更新分类 --初步使用ok
+    public ResultVO updateCategory(HttpSession session,@Valid CurriculumCategoryManageForm categoryForm,
                                     BindingResult bindingResult){
-        UserInfo user = (UserInfo) session.getAttribute(Const.CURRENT_USER);
+        /*UserInfo user = (UserInfo) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             throw  new CurriculumException(ResultEnum.NEED_LOGIN);
-        }
+        }*/
 //        if(iUserService.checkAdminRole(user).isSuccess()){
 //            //更新categoryName
 //            return iCategoryService.updateCategoryName(categoryId,categoryName);
 //        }else{
 //            return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
 //        }
-        CurriculumCategory curriculumCategory = null;
+        CurriculumCategory curriculumCategory = new CurriculumCategory();
         if (categoryForm.getCategoryId() != null) {
             curriculumCategory = curriculumCategoryService.findOne(categoryForm.getCategoryId());
         } else {
             throw new CurriculumException(ResultEnum.CURRICULUM_CATEGORY_STATUS_ERROR);
         }
-        BeanUtils.copyProperties(categoryForm,curriculumCategory);
+        BeanUtils.copyProperties(categoryForm, curriculumCategory);
+//      字符串数组传化格式
+        String[] categoryFormCategoryElements = categoryForm.getCategoryElements();
+        curriculumCategory.setCategoryElements(MyStringUtil.stringArray2StringConvert(categoryFormCategoryElements));
+
         if(curriculumCategoryService.updateCategory(curriculumCategory) != null){
             return ResultVOUtil.success();
         }

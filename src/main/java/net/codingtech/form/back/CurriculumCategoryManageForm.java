@@ -18,5 +18,6 @@ public class CurriculumCategoryManageForm {
 
     private Integer categoryStatus ;
 
-    private String categoryElements;
+    //是否应用字符串数组对象，待定
+    private String[] categoryElements;
 }

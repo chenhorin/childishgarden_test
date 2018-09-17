@@ -35,6 +35,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -122,6 +123,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
+    @Transactional
     public CurriculumDTO save(CurriculumDTO curriculumDTO) {
 //      设置课程id
         String curriculumId = KeyUtil.genUniqueKey();
@@ -196,12 +198,12 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     @Override
 //    按关键字或课程id搜索
-    public PageInfo manageFindSearchCurriculum(String curriculumName, Integer curriculumId, int pageNum, int pageSize) {
+    public PageInfo manageFindSearchCurriculum(String curriculumName, String curriculumId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(curriculumName)) {
             curriculumName = new StringBuilder().append("%").append(curriculumName).append("%").toString();
         }
-        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndProductId(curriculumName, curriculumId);
+        List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndCurriculumId(curriculumName, curriculumId);
         List<CurriculumListVO> curriculumListVOList = Lists.newArrayList();
         for (CurriculumInfo curriculumInfo : curriculumInfoList) {
             CurriculumListVO curriculumListVO = new CurriculumListVO();
@@ -218,7 +220,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
         if (StringUtils.isBlank(keyword) && categoryId == null) {
             throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "无法显示");
         }
-        List<Integer> categoryIdList = new ArrayList<Integer>();
+        List<CurriculumCategory> curriculumCategories = new ArrayList<>();
 
         if (categoryId != null) {
             CurriculumCategory curriculumCategory = curriculumCategoryMapper.selectByPrimaryKey(categoryId);
@@ -230,7 +232,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
                 return pageInfo;
             }
             //递归子节点
-            categoryIdList = iCurriculumCategoryService.getCategoryAndDeepChildrenCategory(curriculumCategory.getCategoryId());
+            curriculumCategories = iCurriculumCategoryService.getCategoryAndDeepChildrenCategory(curriculumCategory.getCategoryId());
         }
         if (StringUtils.isNotBlank(keyword)) {
             keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
@@ -244,9 +246,11 @@ public class CurriculumServiceImpl implements ICurriculumService {
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
         }
+        List<Integer> categoryIdList = curriculumCategories.stream().map(e -> e.getCategoryId()).collect(Collectors.toList());
+
         List<CurriculumInfo> curriculumInfoList = curriculumInfoMapper.selectByNameAndCategoryIds(
                 StringUtils.isBlank(keyword) ? null : keyword,
-                categoryIdList.size() == 0 ? null : categoryIdList,
+                curriculumCategories.size() == 0 ? null : categoryIdList,
                 curriculumProperty == null ? null :curriculumProperty,
                 StringUtils.isBlank(curriculumAge) ? null : curriculumAge);
 
@@ -275,11 +279,13 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }*/
 
     @Override
+//    查询课程的详情
     public CurriculumDetailVO manageCurriculumDetail(String curriculumId) {
 
         if (curriculumId == null) {
             throw new CurriculumException(ResultEnum.PARAM_ERROR);
         }
+
 
         CurriculumInfo curriculumInfo = curriculumInfoMapper.selectByPrimaryKey(curriculumId);
 

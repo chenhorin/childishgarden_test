@@ -21,7 +21,7 @@ public interface CurriculumInfoMapper {
      * 根据名字和id查询
      * @return
      */
-    List<CurriculumInfo> selectByNameAndProductId(@Param("curriculumName")String curriculumName, @Param("curriculumId") Integer curriculumId);
+    List<CurriculumInfo> selectByNameAndCurriculumId(@Param("curriculumName")String curriculumName, @Param("curriculumId") String curriculumId);
 
     List<CurriculumInfo> selectByNameAndCategoryIds(@Param("curriculumName")String curriculumName,@Param("categoryIdList")List<Integer> categoryIdList,
                                                     @Param("curriculumProperty")Integer curriculumProperty,@Param("curriculumAge")String curriculumAge );

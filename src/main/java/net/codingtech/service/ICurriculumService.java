@@ -84,7 +84,7 @@ public interface ICurriculumService {
      * @return
      */
     PageInfo manageFindSearchCurriculum(String curriculumName,
-                                        Integer curriculumId,
+                                        String curriculumId,
                                         int pageNum,
                                         int pageSize);
 

@@ -70,13 +70,7 @@ public class CurriculumInfo {
     }
 
 
-    public CurriculumInfo(String curriculumId, String curriculumName, Integer curriculumProperty,
-                          String userId, String userName, Integer curriculumDifficulty,
-                          Integer curriculumStatus, Integer categoryId, String curriculumPlan,
-                          String curriculumDescription, String curriculumPrepare, String activityStep,
-                          String activityTarget, String activityTarget2, String curriculumTarget,
-                          String curriculumAge, String curriculumElement, Date createTime, Date updateTime,
-                          String categoryName) {
+    public CurriculumInfo(String curriculumId, String curriculumName, Integer curriculumProperty, String userId, String userName, Integer curriculumDifficulty, Integer curriculumStatus, Integer categoryId, String curriculumPlan, String curriculumDescription, String curriculumPrepare, String activityStep, String activityTarget, String activityTarget2, String curriculumTarget, String curriculumAge, String curriculumElement, Date createTime, Date updateTime, String categoryName) {
         this.curriculumId = curriculumId;
         this.curriculumName = curriculumName;
         this.curriculumProperty = curriculumProperty;
