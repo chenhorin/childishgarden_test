@@ -6,10 +6,10 @@
       <idArg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="is_parent" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="sort_order" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="parent_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="parent_id" jdbcType="BIGINT" javaType="java.lang.Integer" />
       <arg column="category_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="category_elements" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="category_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="category_status" jdbcType="TINYINT" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>

@@ -1,5 +1,6 @@
 package net.codingtech.VO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,10 +11,10 @@ import java.io.Serializable;
  * 2018-08-20 14:13
  */
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultVO<T> implements Serializable {
 
-    private static final long serialVersionUID = 3068837394742385883L;
-
+    private static final long serialVersionUID = -8617332374630082570L;
     /**
      * 错误码.
      */

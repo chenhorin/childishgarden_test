@@ -242,7 +242,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
             if (Const.CurriculumListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)) {
-                String[] orderByArray = orderBy.split("_");
+                String[] orderByArray = orderBy.split("-");
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
         }
@@ -310,7 +310,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     //查询老师列表
     @Override
-    public List<DynamicConditionDTO> findTeacherList(Integer campId) {
+    public List<DynamicConditionDTO> findTeacherList(String campId) {
         if (campId != null) {
             List<UserInfo> userInfoList = userInfoRepository.findByCampId(campId);
             List<DynamicConditionDTO> dynamicConditionDTOList = new ArrayList<>();

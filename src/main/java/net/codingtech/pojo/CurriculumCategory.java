@@ -21,7 +21,6 @@ import java.util.Date;
 public class CurriculumCategory {
 
     @Id
-    @GeneratedValue
     private Integer categoryId;
 
     private Boolean isParent;
@@ -32,28 +31,28 @@ public class CurriculumCategory {
 
     private String categoryName;
 
+    private String categoryElements;
+
     private Integer categoryStatus = CurriculumStatusEnum.UP.getCode();
 
     private Date createTime;
 
     private Date updateTime;
 
-    private String categoryElements;
 
 
     public CurriculumCategory() {
     }
 
-    public CurriculumCategory(Boolean isParent, Integer sortOrder, Integer parentId, String categoryName,
-                              Integer categoryStatus, Date createTime,
-                              Date updateTime, String categoryElements) {
+    public CurriculumCategory(Integer categoryId, Boolean isParent, Integer sortOrder, Integer parentId, String categoryName, String categoryElements, Integer categoryStatus, Date createTime, Date updateTime) {
+        this.categoryId = categoryId;
         this.isParent = isParent;
         this.sortOrder = sortOrder;
         this.parentId = parentId;
         this.categoryName = categoryName;
+        this.categoryElements = categoryElements;
         this.categoryStatus = categoryStatus;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.categoryElements = categoryElements;
     }
 }

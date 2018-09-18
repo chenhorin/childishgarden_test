@@ -15,12 +15,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration //必须存在
 @EnableSwagger2 //必须存在
-@EnableWebMvc //必须存在
+/*@EnableWebMvc*/
 @ComponentScan(basePackages = {"net.codingtech.controller"})
 //必须存在 扫描的API Controller package name 也可以直接扫描class (basePackageClasses)
-public class SwaggerConfig extends WebMvcConfigurerAdapter {
+public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
 
-    @Override
+    /*@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("swagger-ui.html")
@@ -28,7 +28,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
-    }
+    }*/
     @Bean
     public Docket customDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -41,7 +41,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("前台API接口")
+                .title("稚园API接口大全")
                 .description("前台API接口")
                 .contact("coding.net")
                 .version("1.1.0")

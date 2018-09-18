@@ -47,7 +47,7 @@ public interface ICurriculumService {
     /**
      * 根据校区查询老师列表
      */
-    List<DynamicConditionDTO> findTeacherList(Integer campId);
+    List<DynamicConditionDTO> findTeacherList(String campId);
 
     /**
      * 查询适合课程的年龄段

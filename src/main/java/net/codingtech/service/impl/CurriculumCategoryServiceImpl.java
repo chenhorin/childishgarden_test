@@ -125,7 +125,7 @@ public class CurriculumCategoryServiceImpl implements ICurriculumCategoryService
                         e.getCategoryId(),
                         e.getCategoryName(),
                         e.getIsParent() ? "closed" : "open",
-                        e.getIsParent() ? e.getCategoryElements() : null))
+                        e.getIsParent() ? null : e.getCategoryElements()))
                 .collect(Collectors.toList());
 
         return curriculumCategoryTreeVOList;

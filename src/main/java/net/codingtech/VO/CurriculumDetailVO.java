@@ -3,11 +3,14 @@ package net.codingtech.VO;
 import lombok.Data;
 import net.codingtech.pojo.CurriculumDetail;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class CurriculumDetailVO {
+public class CurriculumDetailVO implements Serializable {
+
+    private static final long serialVersionUID = -9145550613882143486L;
 
     private String curriculumId;
 

@@ -302,10 +302,10 @@
       </foreach>
     </if>
     <if test="curriculumProperty != null">
-      curriculum_propertty = #{curriculumProperty,jdbcType=INTEGER}
+      and curriculum_property = #{curriculumProperty,jdbcType=INTEGER}
     </if>
     <if test="curriculumAge != null">
-      curriculum_Age = #{curriculumAge,jdbcType=TINYINT}
+      and curriculum_Age = #{curriculumAge,jdbcType=TINYINT}
     </if>
   </select>
 </mapper>

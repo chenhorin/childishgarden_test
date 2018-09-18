@@ -2,6 +2,7 @@ package net.codingtech.controller.portal;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import com.sun.org.apache.regexp.internal.REUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.codingtech.VO.CurriculumCategoryTreeVO;
 import net.codingtech.VO.ResultVO;
@@ -37,6 +38,7 @@ public class CurriculumController {
     private ICurriculumCategoryService curriculumCategoryService;
 
     @RequestMapping("/save")
+//    ok
     //课程保存，返回的是DTO对象，组合了课程详情，返回值得确定需要，和前端商定是否需要回调，还是只需要id
     public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumManageForm curriculum,
                                                         BindingResult bindingResult) {
@@ -49,6 +51,7 @@ public class CurriculumController {
 
     @RequestMapping("/list")
     //课程显示的筛选
+//    ok
     public ResultVO<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                    @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -69,6 +72,7 @@ public class CurriculumController {
 
     @RequestMapping("/detail")
     //课程详情展示的是课程新增和保存的数据，所以数据源需要一致返回的是CurriculumDTO
+//    ok
     public ResultVO<CurriculumDTO> detail(String curriculumId) {
         return ResultVOUtil.success(iCurriculumService.findOne(curriculumId));
     }
@@ -82,7 +86,8 @@ public class CurriculumController {
 
     @RequestMapping("/teacher")
     //应用场景，创建课程时需要，遍历
-    public ResultVO<List<DynamicConditionDTO>> getTeacherList(Integer campId) {
+//    ok
+    public ResultVO<List<DynamicConditionDTO>> getTeacherList(String campId) {
         return ResultVOUtil.success(iCurriculumService.findTeacherList(campId));
     }
 
@@ -91,6 +96,7 @@ public class CurriculumController {
 //    ok
     public ResultVO<List<DynamicConditionDTO>> getTeacherList() {
         return ResultVOUtil.success(iCurriculumService.findCurriculumAge());
+//        return ResultVOUtil.success(null);测试json 返回null
     }
 
     @RequestMapping("/property")

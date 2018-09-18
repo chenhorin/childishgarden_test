@@ -12,5 +12,5 @@ import java.util.List;
  * @create: 2018-08-13 16:41
  **/
 public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
-    List<UserInfo> findByCampId(Integer campId);
+    List<UserInfo> findByCampId(String campId);
 }

@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Data
 public class CurriculumCategoryTreeVO implements Serializable {
 
+    private static final long serialVersionUID = 9038411424559333003L;
     //父类Id
     private Integer id;
     private Integer categoryId;
