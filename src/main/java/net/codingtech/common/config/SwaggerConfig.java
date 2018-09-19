@@ -1,12 +1,10 @@
 package net.codingtech.common.config;
 
+import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -16,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration //必须存在
 @EnableSwagger2 //必须存在
 /*@EnableWebMvc*/
-@ComponentScan(basePackages = {"net.codingtech.controller"})
+//@ComponentScan(basePackages = {"net.codingtech.controller"})
 //必须存在 扫描的API Controller package name 也可以直接扫描class (basePackageClasses)
 public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
 
@@ -34,7 +32,17 @@ public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("controller")
                 .apiInfo(apiInfo())
-                .select()
+                .select().apis(RequestHandlerSelectors.basePackage("net.codingtech.controller"))
+                .build()
+                ;
+    }
+
+    @Bean
+    public Docket defaultDocket() {
+        return new Docket(DocumentationType.SWAGGER_2)
+//                .groupName("controller")
+//                .apiInfo(apiInfo())
+                .select().apis(RequestHandlerSelectors.basePackage(BasicErrorController.class.getPackage().getName()))
                 .build()
                 ;
     }
@@ -42,9 +50,9 @@ public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("稚园API接口大全")
-                .description("前台API接口")
-                .contact("coding.net")
-                .version("1.1.0")
+                .description("前台以及后台API接口")
+                .contact("豆町科技")
+                .version("1.0")
                 .build();
     }
 }

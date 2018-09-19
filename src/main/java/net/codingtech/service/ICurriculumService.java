@@ -2,6 +2,7 @@ package net.codingtech.service;
 
 import com.github.pagehelper.PageInfo;
 import net.codingtech.VO.CurriculumDetailVO;
+import net.codingtech.VO.CurriculumListVO;
 import net.codingtech.dto.CurriculumDTO;
 import net.codingtech.dto.DynamicConditionDTO;
 import net.codingtech.pojo.CurriculumInfo;
@@ -33,7 +34,7 @@ public interface ICurriculumService {
      * @param curriculumAge
      * @return
      */
-    PageInfo findCurriculumByKeywordCategoryIdPropertyAge(String keyword,
+    PageInfo<List<CurriculumListVO>> findCurriculumByKeywordCategoryIdPropertyAge(String keyword,
                                                           Integer categoryId,
                                                           Integer pageNum,
                                                           Integer pageSize,
@@ -72,7 +73,7 @@ public interface ICurriculumService {
      * @param pageSize
      * @return
      */
-    PageInfo manageFindCurriculumList(int pageNum, int pageSize);
+    PageInfo<List<CurriculumListVO>> manageFindCurriculumList(int pageNum, int pageSize);
 
     /**
      * 后台模糊搜索课程
@@ -83,7 +84,7 @@ public interface ICurriculumService {
      * @param pageSize
      * @return
      */
-    PageInfo manageFindSearchCurriculum(String curriculumName,
+    PageInfo<List<CurriculumListVO>> manageFindSearchCurriculum(String curriculumName,
                                         String curriculumId,
                                         int pageNum,
                                         int pageSize);

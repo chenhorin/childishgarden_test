@@ -3,7 +3,10 @@ package net.codingtech.controller.back;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.codingtech.VO.CurriculumDetailVO;
+import net.codingtech.VO.CurriculumListVO;
 import net.codingtech.VO.ResultVO;
 import net.codingtech.convert.CurriculumForm2DTOConverter;
 import net.codingtech.dto.CurriculumDTO;
@@ -15,19 +18,19 @@ import net.codingtech.utils.PropertiesUtil;
 import net.codingtech.utils.ResultVOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/manage/curriculum")
+@Api(tags = "Manage-Curriculum",description = "后台-课程管理相关")
 public class CurriculumManageController {
 
     @Autowired
@@ -36,9 +39,10 @@ public class CurriculumManageController {
     @Autowired
     private IFileService iFileService;
 
-    @RequestMapping("/save")
+    @PostMapping("/save")
     //后台的新增和保存
 //    ok
+    @ApiOperation(notes = "根据相应的规则和条件动态的,新建和更新课程",value = "新建和更新课程")
     public ResultVO<Map<String, String>> curriculumSave(HttpSession session, @Valid CurriculumManageForm curriculum,
                                                         BindingResult bindingResult) {
       /*  User user = (User)session.getAttribute(Const.CURRENT_USER);
@@ -59,46 +63,52 @@ public class CurriculumManageController {
         return ResultVOUtil.success(map);
     }
 
-    @RequestMapping("/detail")
+    @PostMapping("/detail")
 //    ok
+    @ApiOperation(value = "课程详情",notes = "课程基本状况加上课程的详情")
     public ResultVO<CurriculumDetailVO> getDetail(HttpSession session, String curriculumId) {
         return ResultVOUtil.success(iCurriculumService.manageCurriculumDetail(curriculumId));
     }
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
 //    *ok
     //返回curriculumListVOList的分页对象
-    protected ResultVO<PageInfo> list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    @ApiOperation(value = "显示所有课程",notes = "显示所有课程,包括所有非在线课程")
+    protected ResultVO<PageInfo<List<CurriculumListVO>>> list(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return ResultVOUtil.success(iCurriculumService.manageFindCurriculumList(pageNum, pageSize));
     }
 
-    @RequestMapping("/search")
+    @GetMapping("/search")
     //返回curriculumListVOList的分页对象
 //    *ok
-    public ResultVO<PageInfo> productSearch(HttpSession session, String curriculumName, String curriculumId,
+    @ApiOperation(value = "后台搜索",notes = "根据课程关键字或者课程Id进行查询,默认分页为page_num = 1,page_size = 10")
+    public ResultVO<PageInfo<List<CurriculumListVO>>> productSearch(HttpSession session, String curriculumName, String curriculumId,
                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         return ResultVOUtil.success(iCurriculumService.manageFindSearchCurriculum(curriculumName, curriculumId, pageNum, pageSize));
     }
 
-    @RequestMapping("/on_use")
+    @GetMapping("/on_use")
     //课程的上线
 //    ok
+    @ApiOperation(value = "课程的上线",notes = "根据相应的规则上线课程")
     public ResultVO<CurriculumInfo> onUse(HttpSession session, String curriculumId) {
         return ResultVOUtil.success(iCurriculumService.onUsing(curriculumId));
     }
 
-    @RequestMapping("/off_use")
+    @GetMapping("/off_use")
     //课程的下线
 //    ok
+    @ApiOperation(value = "课程的下线",notes = "根据相应的规则下线课程")
     public ResultVO<CurriculumInfo> offUse(HttpSession session, String curriculumId) {
         return ResultVOUtil.success(iCurriculumService.offUsing(curriculumId));
     }
 
 
-    @RequestMapping("/upload")
+    @PostMapping("/upload")
+    @ApiOperation(value = "文件上传",notes = "文件上传到服务器,尚未打通")
     public ResultVO upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         /*User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){

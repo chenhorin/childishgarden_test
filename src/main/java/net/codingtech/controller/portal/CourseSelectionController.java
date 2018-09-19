@@ -1,7 +1,9 @@
 package net.codingtech.controller.portal;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.codingtech.VO.ResultVO;
+import net.codingtech.dto.CourseSelectionDTO;
 import net.codingtech.form.portal.CourseForm;
 import net.codingtech.service.ICourseSelectionService;
 import net.codingtech.utils.ResultVOUtil;
@@ -12,15 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/course")
+@Api(tags = "Portal-CourseSelect",description = "前台-排课表相关")
 public class CourseSelectionController {
 
     @Autowired
     ICourseSelectionService courseSelectionService;
 
-    @ApiOperation(value="动态查询",notes = "第一个测试api")
+    @ApiOperation(value="动态查询",notes = "根据班级id,用户Id,学生Id动态查询选课表,以周为单位")
     @GetMapping("/findByClassId")
 //    Ok
-    public ResultVO findByClassId(CourseForm courseForm) {
+    public ResultVO<CourseSelectionDTO> findByClassId(CourseForm courseForm) {
         return ResultVOUtil.success(courseSelectionService.findByClassIdOrChildIdOrUserId(courseForm));
     }
 }

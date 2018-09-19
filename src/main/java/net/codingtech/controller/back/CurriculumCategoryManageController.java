@@ -1,5 +1,7 @@
 package net.codingtech.controller.back;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.codingtech.VO.ResultVO;
 import net.codingtech.common.enums.ResultEnum;
 import net.codingtech.exception.CurriculumException;
@@ -11,22 +13,22 @@ import net.codingtech.utils.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/manage/category")
+@Api(tags = "Manage-Curriculum-Category",description = "后台-课程分类相关")
 public class CurriculumCategoryManageController {
 
     @Autowired
     private ICurriculumCategoryService curriculumCategoryService;
 
-
-    @RequestMapping("/add")
+    @ApiOperation(value = "管理员创建分类",notes = "根据相应规则创建分类")
+    @PostMapping("/add")
     //新增分类 --初步使用ok
     public ResultVO addCategory(HttpSession session,@Valid CurriculumCategoryManageForm categoryForm,
                                 BindingResult bindingResult){
@@ -46,7 +48,8 @@ public class CurriculumCategoryManageController {
         return ResultVOUtil.error(ResultEnum.CURRICULUM_CATEGORY_STATUS_ERROR);
     }
 
-    @RequestMapping("/set")
+    @ApiOperation(value = "更新设置课分类", notes = "根据相应规则设置分类")
+    @PostMapping("/set")
     //更新分类 --初步使用ok
     public ResultVO updateCategory(HttpSession session,@Valid CurriculumCategoryManageForm categoryForm,
                                     BindingResult bindingResult){
@@ -78,7 +81,8 @@ public class CurriculumCategoryManageController {
     }
 
     //上架
-    @RequestMapping("/up")
+    @GetMapping("/up")
+    @ApiOperation(value = "分类上线使用",notes = "根据相应的规则将已下线的分类重新上线")
     public ResultVO onUsing(@RequestParam("categoryId") Integer curriculumCategoryId) {
 
         if (curriculumCategoryService.onUsing(curriculumCategoryId) != null)
@@ -88,7 +92,8 @@ public class CurriculumCategoryManageController {
     }
 
     //下架
-    @RequestMapping("/down")
+    @GetMapping("/down")
+    @ApiOperation(value = "分类下线",notes = "根据相应的规则分类下线")
     public ResultVO offUsing(@RequestParam("categoryId") Integer curriculumCategoryId) {
 
         if (curriculumCategoryService.offUsing(curriculumCategoryId) != null)
@@ -98,8 +103,9 @@ public class CurriculumCategoryManageController {
     }
 
     //查询子节点不递归
-    @RequestMapping("/getCategory")
-    public ResultVO getChildrenParallelCategory(HttpSession session,@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
+    @GetMapping("/getCategory")
+    @ApiOperation(value = "查询分类下的叶子节点",notes ="查询分类下的叶子节点(不递归)")
+    public ResultVO<List<CurriculumCategory>> getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
 //        User user = (User)session.getAttribute(Const.CURRENT_USER);
 //        if(user == null){
 //            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录");
@@ -114,8 +120,9 @@ public class CurriculumCategoryManageController {
     }
 
     //查询子节点递归
-    @RequestMapping("/getDeepCategory")
-    public ResultVO getCategoryAndDeepChildrenCategory(HttpSession session,@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId) {
+    @GetMapping("/getDeepCategory")
+    @ApiOperation(value = "查询分类下的所有叶子节点",notes ="查询分类下的叶子节点(递归)")
+    public ResultVO<List<CurriculumCategory>> getCategoryAndDeepChildrenCategory(HttpSession session,@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId) {
         return ResultVOUtil.success(curriculumCategoryService.getCategoryAndDeepChildrenCategory(categoryId));
     }
 }

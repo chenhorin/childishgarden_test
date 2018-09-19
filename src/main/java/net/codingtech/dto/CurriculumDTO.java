@@ -1,5 +1,7 @@
 package net.codingtech.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import net.codingtech.pojo.CurriculumDetail;
 
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@ApiModel(value = "课程返回对象",description = "课程模型")
 public class CurriculumDTO {
 
     private String curriculumId;
@@ -21,6 +24,7 @@ public class CurriculumDTO {
 
     private Integer curriculumDifficulty;
 
+    @ApiModelProperty(value = "状态",dataType = "net.codingtech.common.enums.CurriculumStatusEnum")
     private Integer curriculumStatus;
 
     private Integer categoryId;

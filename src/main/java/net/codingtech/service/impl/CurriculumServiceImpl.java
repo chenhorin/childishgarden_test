@@ -181,7 +181,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
-    public PageInfo manageFindCurriculumList(int pageNum, int pageSize) {
+    public PageInfo<List<CurriculumListVO>> manageFindCurriculumList(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CurriculumInfo> curriculumInfoList = curriculumInfoRepository.findAll();
 
@@ -198,7 +198,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
 
     @Override
 //    按关键字或课程id搜索
-    public PageInfo manageFindSearchCurriculum(String curriculumName, String curriculumId, int pageNum, int pageSize) {
+    public PageInfo<List<CurriculumListVO>> manageFindSearchCurriculum(String curriculumName, String curriculumId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(curriculumName)) {
             curriculumName = new StringBuilder().append("%").append(curriculumName).append("%").toString();
@@ -216,7 +216,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
     }
 
     @Override
-    public PageInfo findCurriculumByKeywordCategoryIdPropertyAge(String keyword, Integer categoryId, Integer pageNum, Integer pageSize, String orderBy, Integer curriculumProperty, String curriculumAge) {
+    public PageInfo<List<CurriculumListVO>> findCurriculumByKeywordCategoryIdPropertyAge(String keyword, Integer categoryId, Integer pageNum, Integer pageSize, String orderBy, Integer curriculumProperty, String curriculumAge) {
         if (StringUtils.isBlank(keyword) && categoryId == null) {
             throw new CurriculumException(ResultEnum.INFO_BY_BACK.getCode(), "无法显示");
         }
