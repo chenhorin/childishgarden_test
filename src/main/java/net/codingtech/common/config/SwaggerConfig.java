@@ -2,7 +2,11 @@ package net.codingtech.common.config;
 
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -30,14 +34,14 @@ public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
     @Bean
     public Docket customDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("controller")
+//                .groupName("controller")
                 .apiInfo(apiInfo())
                 .select().apis(RequestHandlerSelectors.basePackage("net.codingtech.controller"))
                 .build()
                 ;
     }
 
-    @Bean
+   /* @Bean
     public Docket defaultDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
 //                .groupName("controller")
@@ -45,7 +49,7 @@ public class SwaggerConfig /*extends WebMvcConfigurerAdapter*/ {
                 .select().apis(RequestHandlerSelectors.basePackage(BasicErrorController.class.getPackage().getName()))
                 .build()
                 ;
-    }
+    }*/
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
