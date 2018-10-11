@@ -5,6 +5,7 @@ import net.codingtech.dto.CourseSelectionDTO;
 import net.codingtech.utils.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CourseSelection2CourseSelectionDTOConverter {
@@ -29,6 +30,7 @@ public class CourseSelection2CourseSelectionDTOConverter {
         List<CourseSelection> friday = new ArrayList<>();
         List<CourseSelection> saturday = new ArrayList<>();
         List<CourseSelection> sunday = new ArrayList<>();
+        List<CourseSelection> testWeeks = new LinkedList<>();
 
         //遍历选课的集合
         for (CourseSelection courseSelection : courseSelectionList) {
