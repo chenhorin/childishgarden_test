@@ -30,7 +30,6 @@ public class CourseSelection2CourseSelectionDTOConverter {
         List<CourseSelection> friday = new ArrayList<>();
         List<CourseSelection> saturday = new ArrayList<>();
         List<CourseSelection> sunday = new ArrayList<>();
-        List<CourseSelection> testWeeks = new LinkedList<>();
 
         //遍历选课的集合
         for (CourseSelection courseSelection : courseSelectionList) {
