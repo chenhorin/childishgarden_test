@@ -72,6 +72,9 @@ public class CurriculumCategoryManageController {
         BeanUtils.copyProperties(categoryForm, curriculumCategory);
 //      字符串数组传化格式
         String[] categoryFormCategoryElements = categoryForm.getCategoryElements();
+        for (String categoryFormCategoryElement : categoryFormCategoryElements) {
+            System.out.println(categoryFormCategoryElement);
+        }
         curriculumCategory.setCategoryElements(MyStringUtil.stringArray2StringConvert(categoryFormCategoryElements));
 
         if(curriculumCategoryService.updateCategory(curriculumCategory) != null){

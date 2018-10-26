@@ -241,7 +241,7 @@ public class CurriculumServiceImpl implements ICurriculumService {
         PageHelper.startPage(pageNum, pageSize);
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
-            if (Const.CurriculumListOrderBy.CREATETIME_ASC_DESC.contains(orderBy)) {
+            if (Const.CurriculumListOrderBy.CREATE_TIME_ASC_DESC.contains(orderBy)) {
                 String[] orderByArray = orderBy.split("-");
                 PageHelper.orderBy(orderByArray[0] + " " + orderByArray[1]);
             }
